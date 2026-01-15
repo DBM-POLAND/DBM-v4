@@ -23,5 +23,6 @@ for (const file of files) {
 }
 
 const outPath = path.resolve(__dirname, "../../docs/dbm/extensions.json");
+console.log(outPath);
 await writeFile(outPath, JSON.stringify(result, null, 2));
 console.log("extensions.json generated locally!");
