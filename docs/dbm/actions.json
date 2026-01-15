@@ -380,6 +380,11 @@
     "section": "Data Control"
   },
   {
+    "name": "Control Database Data",
+    "description": "It is used to manage selected data in a set database file.",
+    "section": "Data Control"
+  },
+  {
     "name": "Control Global Data",
     "description": "Use to create or update stored global data.",
     "section": "Data Control"
@@ -432,6 +437,11 @@
   {
     "name": "Store Data List",
     "description": "Use to store or update a list in the data store.",
+    "section": "Data Control"
+  },
+  {
+    "name": "Store Database Data",
+    "description": "Used to obtain selected information from a specified database file.",
     "section": "Data Control"
   },
   {
