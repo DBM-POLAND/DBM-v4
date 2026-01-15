@@ -1,0 +1,25 @@
+name: Lint
+on:
+  push:
+    branches: [main]
+    paths:
+      - bot/actions/**
+      - bot/events/**
+      - bot/extensions/**
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Run ESLint
+        run: npm run lint
+      - name: Run Prettier check
+        run: npm run prettier:check
