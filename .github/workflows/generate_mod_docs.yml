@@ -1,0 +1,5 @@
+name: "Generate Mod Docs"
+description: "Generates mod documentation."
+runs:
+  using: "node20"
+  main: "generate_mod_docs.mjs"
