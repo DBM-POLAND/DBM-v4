@@ -48,12 +48,22 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: Remove previous 'latest' release
+      - name: Reassign previous 'latest' tag
         run: |
-          PREV_LATEST_TAG=$(gh release list --limit 10 --json tagName | jq -r '.[] | select(.tagName=="latest") | .tagName')
-          if [ -n "$PREV_LATEST_TAG" ]; then
-            echo "Found previous release with tag 'latest', deleting..."
-           gh release delete "$PREV_LATEST_TAG" --yes
+          # Pobierz release z tagiem latest
+          LATEST_RELEASE_ID=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .id')
+          LATEST_RELEASE_NAME=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .name')
+
+          if [ -n "$LATEST_RELEASE_ID" ]; then
+            echo "Found previous release with tag 'latest' (ID: $LATEST_RELEASE_ID, name: $LATEST_RELEASE_NAME)"
+            
+            # Stwórz nowy tag o nazwie release (jeśli jeszcze nie istnieje)
+            git tag -f "$LATEST_RELEASE_NAME" || true
+            git push origin "$LATEST_RELEASE_NAME" --force || true
+
+            # Edytuj release, przypisz mu nowy tag
+            gh release edit "$LATEST_RELEASE_ID" --tag "$LATEST_RELEASE_NAME"
+            echo "Previous release tag 'latest' reassigned to '$LATEST_RELEASE_NAME'"
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
