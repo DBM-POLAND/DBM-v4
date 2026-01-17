@@ -14,6 +14,9 @@ jobs:
   update_branch:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait 10 seconds
+        run: sleep 10
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -37,14 +40,13 @@ jobs:
           else
             git checkout --orphan $BRANCH_NAME
             git rm -rf . || true
-          fi
 
-      - name: Copy only dbm, bot, LICENSE and README.md
+      - name: Copy only dbm, bot, docs/img, LICENSE and README.md
         run: |
-          git checkout main -- dbm bot LICENSE README.md || true
+          git checkout main -- dbm bot docs/img LICENSE README.md || true
 
       - name: Commit and push
         run: |
-          git add dbm bot LICENSE README.md
+          git add dbm bot docs/img LICENSE README.md
           git commit -m "Update branch $BRANCH_NAME" || echo "No changes to commit"
           git push origin $BRANCH_NAME --force
