@@ -53,9 +53,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/advanced_math_operation.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -151,11 +152,11 @@ module.exports = {
   action(cache) {
     const data = cache.actions[cache.index];
     let number1 = parseFloat(
-      this.evalMessage(data.number1, cache).replace(/,/g, "")
+      this.evalMessage(data.number1, cache).replace(/,/g, ""),
     );
     const info = parseInt(data.info, 10);
     const number2 = parseFloat(
-      this.evalMessage(data.number2, cache).replace(/,/g, "")
+      this.evalMessage(data.number2, cache).replace(/,/g, ""),
     );
 
     let result;
@@ -245,7 +246,7 @@ module.exports = {
         result,
         parseInt(data.storage, 10),
         this.evalMessage(data.varName, cache),
-        cache
+        cache,
       );
     }
     this.callNextAction(cache);

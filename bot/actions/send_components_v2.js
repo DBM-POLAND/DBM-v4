@@ -81,7 +81,7 @@ module.exports = {
         default:
           targetText = `Edit ${presets.getVariableText(
             data.editMessage,
-            data.editMessageVarName
+            data.editMessageVarName,
           )}`;
       }
     }
@@ -113,9 +113,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/send_components_v2.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -1263,7 +1264,7 @@ module.exports = {
     const target = await this.getSendReplyTarget(
       parseInt(data.channel, 10),
       this.evalMessage(data.varName, cache),
-      cache
+      cache,
     );
 
     const components = [];
@@ -1277,7 +1278,7 @@ module.exports = {
         this.getVariable(
           parseInt(data.editMessage, 10),
           this.evalMessage(data.editMessageVarName, cache),
-          cache
+          cache,
         ) || cache.interaction.message;
     }
 
@@ -1296,10 +1297,10 @@ module.exports = {
       //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
       else if (c.componentType === "1") {
         const contentComponent = new TextDisplayBuilder().setContent(
-          this.evalMessage(c.sectionContent, 10) || "ᅠ"
+          this.evalMessage(c.sectionContent, 10) || "ᅠ",
         );
         const component = new SectionBuilder().addTextDisplayComponents(
-          contentComponent
+          contentComponent,
         );
         for (const a of c.accessory) {
           if (a.accessoryType === "0") {
@@ -1314,7 +1315,7 @@ module.exports = {
                 style: a.type,
                 url: a.url,
               },
-              cache
+              cache,
             );
             if (a.mode !== "PERSISTENT") {
               awaitResponses.push({
@@ -1355,7 +1356,7 @@ module.exports = {
               Object.entries(Colors).map(([key, value]) => [
                 key.toUpperCase(),
                 value,
-              ])
+              ]),
             );
             if (!color) return undefined;
             if (typeof color === "string" && /^#?[0-9A-Fa-f]{6}$/.test(color)) {
@@ -1366,7 +1367,7 @@ module.exports = {
             return undefined;
           }
           const accentColor = parseColor(
-            this.evalMessage(c.containerColor, 10)
+            this.evalMessage(c.containerColor, 10),
           );
           const containerComponent = new ContainerBuilder()
             .setSpoiler(c.containerSpoiler)
@@ -1378,7 +1379,7 @@ module.exports = {
             if (cc.componentType === "0") {
               const content = this.evalMessage(cc.defaultContent, 10);
               const textDisplayComponent = new TextDisplayBuilder().setContent(
-                content
+                content,
               );
               containerComponent.addTextDisplayComponents(textDisplayComponent);
             }
@@ -1388,7 +1389,7 @@ module.exports = {
             //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
             else if (cc.componentType === "1") {
               const contentComponent = new TextDisplayBuilder().setContent(
-                this.evalMessage(cc.sectionContent, 10) || "ᅠ"
+                this.evalMessage(cc.sectionContent, 10) || "ᅠ",
               );
               const sectionComponent =
                 new SectionBuilder().addTextDisplayComponents(contentComponent);
@@ -1406,7 +1407,7 @@ module.exports = {
                       style: a.type,
                       url: a.url,
                     },
-                    cache
+                    cache,
                   );
                   if (a.mode !== "PERSISTENT") {
                     awaitResponses.push({
@@ -1429,7 +1430,7 @@ module.exports = {
                   const spoiler = a.thumbnailSpoiler;
                   const attachmentUrl = await this.resolveAttachmentUrl(
                     url,
-                    files
+                    files,
                   );
                   const thumbnailComponent = new ThumbnailBuilder()
                     .setURL(attachmentUrl)
@@ -1451,7 +1452,7 @@ module.exports = {
                   const spoiler = i.spoiler;
                   const attachmentUrl = await this.resolveAttachmentUrl(
                     url,
-                    files
+                    files,
                   );
                   const item = new MediaGalleryItemBuilder()
                     .setURL(attachmentUrl)
@@ -1461,7 +1462,7 @@ module.exports = {
                 const mediaGalleryComponent =
                   new MediaGalleryBuilder().addItems(items);
                 containerComponent.addMediaGalleryComponents(
-                  mediaGalleryComponent
+                  mediaGalleryComponent,
                 );
               }
             }
@@ -1482,7 +1483,7 @@ module.exports = {
                     {
                       name: name,
                       spoiler: false,
-                    }
+                    },
                   );
                   const fileComponent = new FileBuilder()
                     .setURL(attachmentUrl)
@@ -1527,7 +1528,7 @@ module.exports = {
                       style: b.type,
                       url: b.url,
                     },
-                    cache
+                    cache,
                   );
                   if (b.mode !== "PERSISTENT") {
                     awaitResponses.push({
@@ -1582,7 +1583,7 @@ module.exports = {
                       options: s.options,
                       placeholder: s.placeholder,
                     },
-                    cache
+                    cache,
                   );
                   if (s.mode !== "PERSISTENT") {
                     awaitResponses.push({
@@ -1682,7 +1683,7 @@ module.exports = {
                 style: b.type,
                 url: b.url,
               },
-              cache
+              cache,
             );
             if (b.mode !== "PERSISTENT") {
               awaitResponses.push({
@@ -1733,7 +1734,7 @@ module.exports = {
                 options: s.options,
                 placeholder: s.placeholder,
               },
-              cache
+              cache,
             );
             if (s.mode !== "PERSISTENT") {
               awaitResponses.push({
@@ -1835,22 +1836,22 @@ module.exports = {
                         interaction,
                         response.data,
                         cache.meta,
-                        tempVariables
+                        tempVariables,
                       );
                     } else {
                       this.preformActionsFromSelectInteraction(
                         interaction,
                         response.data,
                         cache.meta,
-                        tempVariables
+                        tempVariables,
                       );
                     }
                   }
-                }
+                },
               );
             }
           },
-        }
+        },
       );
       const varName2 = this.evalMessage(data.varName2, cache);
       const storage = parseInt(data.storage, 10);

@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `Await message in ${presets.getChannelText(
       data.channel,
-      data.channelVarName
+      data.channelVarName,
     )} from ${presets.getMemberText(data.member, data.memberVarName)}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/await_message_from_member.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -111,12 +112,12 @@ module.exports = {
     const channel = await this.getChannelFromData(
       data.channel,
       data.channelVarName,
-      cache
+      cache,
     );
     const member = await this.getMemberFromData(
       data.member,
       data.memberVarName,
-      cache
+      cache,
     );
 
     if (!member || !channel?.createMessageCollector)
@@ -124,7 +125,7 @@ module.exports = {
 
     const maxProcessed = Math.min(
       parseInt(this.evalMessage(data.count, cache), 10),
-      200
+      200,
     );
     const time = parseInt(this.evalMessage(data.time, cache) || "5", 10) * 1000;
     const filter = (m) => m?.author?.id === member.id;

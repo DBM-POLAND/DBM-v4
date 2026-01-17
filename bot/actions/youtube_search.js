@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/youtube_search.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -157,17 +158,17 @@ module.exports = {
       switch (searchType) {
         case 0:
           filteredResults = searchResults.items.filter(
-            (i) => i instanceof youtubei.VideoCompact
+            (i) => i instanceof youtubei.VideoCompact,
           );
           break;
         case 1:
           filteredResults = searchResults.items.filter(
-            (i) => i instanceof youtubei.PlaylistCompact
+            (i) => i instanceof youtubei.PlaylistCompact,
           );
           break;
         case 2:
           filteredResults = searchResults.items.filter(
-            (i) => i instanceof youtubei.BaseChannel
+            (i) => i instanceof youtubei.BaseChannel,
           );
           break;
         case 3:
@@ -193,7 +194,7 @@ module.exports = {
       result,
       parseInt(data.storage, 10),
       this.evalMessage(data.varName, cache),
-      cache
+      cache,
     );
     this.callNextAction(cache);
   },

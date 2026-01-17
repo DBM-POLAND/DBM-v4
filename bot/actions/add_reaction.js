@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `Add Reaction to ${presets.getMessageText(
       data.storage,
-      data.varName
+      data.varName,
     )}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/add_reaction.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -119,7 +120,7 @@ module.exports = {
     const message = await this.getMessageFromData(
       data.storage,
       data.varName,
-      cache
+      cache,
     );
 
     const type = parseInt(data.emoji, 10);
@@ -129,13 +130,13 @@ module.exports = {
       emoji = this.evalMessage(data.varName2, cache);
     } else if (type === 0) {
       emoji = this.getDBM().Bot.bot.emojis.cache.find(
-        (e) => e.name === this.evalMessage(data.varName2, cache)
+        (e) => e.name === this.evalMessage(data.varName2, cache),
       );
     } else {
       emoji = this.getVariable(
         type,
         this.evalMessage(data.varName3, cache),
-        cache
+        cache,
       );
     }
 

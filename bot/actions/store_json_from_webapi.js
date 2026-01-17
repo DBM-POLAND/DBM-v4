@@ -29,9 +29,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_json_from_webapi.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -157,7 +158,7 @@ module.exports = {
     if (token) fetchHeaders.Authorization = `Bearer ${token}`;
     else if (user && pass)
       fetchHeaders.Authorization = `Basic ${Buffer.from(
-        `${user}:${pass}`
+        `${user}:${pass}`,
       ).toString("base64")}`;
     try {
       const res = await fetch(url, { headers: fetchHeaders });
@@ -170,7 +171,7 @@ module.exports = {
         console.log(
           `Stored JSON Data${
             path ? ` at path "${path}"` : ""
-          } to variable [${varName}]`
+          } to variable [${varName}]`,
         );
     } catch (err) {
       debug && console.error(err.stack || err);

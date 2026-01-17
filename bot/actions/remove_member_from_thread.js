@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `${presets.getChannelText(
       data.storage,
-      data.varName
+      data.varName,
     )} - ${presets.getMemberText(data.member, data.varName2)}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/remove_member_from_thread.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -73,12 +74,12 @@ module.exports = {
     const thread = await this.getChannelFromData(
       data.storage,
       data.varName,
-      cache
+      cache,
     );
     const member = await this.getMemberFromData(
       data.member,
       data.varName2,
-      cache
+      cache,
     );
     try {
       await thread.members.remove(member);

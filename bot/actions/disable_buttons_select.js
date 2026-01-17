@@ -28,9 +28,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/disable_buttons_select.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -103,7 +104,7 @@ module.exports = {
     const message = await this.getMessageFromData(
       data.storage,
       data.varName,
-      cache
+      cache,
     );
 
     if (!message?.components) return this.callNextAction(cache);
@@ -183,14 +184,14 @@ module.exports = {
               return RoleSelectMenuBuilder.from(comp).setDisabled(disabled);
             case 7:
               return MentionableSelectMenuBuilder.from(comp).setDisabled(
-                disabled
+                disabled,
               );
             case 8:
               return ChannelSelectMenuBuilder.from(comp).setDisabled(disabled);
             default:
               return comp;
           }
-        })
+        }),
       );
 
       return rowBuilder;

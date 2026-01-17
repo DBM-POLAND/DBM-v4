@@ -43,9 +43,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/set_time_restriction.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -195,7 +196,7 @@ module.exports = {
             Object.entries(obj).map(([k, v]) => [
               k,
               { expiry: v, persistent: true },
-            ])
+            ]),
           );
         }
         this._timeRestrictions = obj;
@@ -220,7 +221,7 @@ module.exports = {
             Math.floor(existingObj.expiry / 1000),
             storage,
             varName,
-            cache
+            cache,
           );
         }
         return this.executeResults(true, data.branch ?? data, cache);
@@ -249,13 +250,13 @@ module.exports = {
         const fs = require("fs");
         const toSave = Object.fromEntries(
           Object.entries(this._timeRestrictions).filter(
-            ([_, v]) => v.persistent && v.expiry > now
-          )
+            ([_, v]) => v.persistent && v.expiry > now,
+          ),
         );
         fs.writeFileSync(
           this._timeRestrictionsFile,
           JSON.stringify(toSave, null, 2),
-          "utf8"
+          "utf8",
         );
         global.DBM_timeRestrictions = { ...toSave };
       } catch {}
@@ -283,13 +284,13 @@ module.exports = {
           Object.entries(obj).map(([k, v]) => [
             k,
             { expiry: v, persistent: true },
-          ])
+          ]),
         );
       }
       const now = Date.now();
 
       const cleaned = Object.fromEntries(
-        Object.entries(obj).filter(([_, v]) => v.expiry > now && v.persistent)
+        Object.entries(obj).filter(([_, v]) => v.expiry > now && v.persistent),
       );
 
       this._timeRestrictions = cleaned;

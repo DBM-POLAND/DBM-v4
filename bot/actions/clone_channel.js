@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `Clone Channel: ${presets.getChannelText(
       data.storage,
-      data.varName
+      data.varName,
     )}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/clone_channel.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -184,7 +185,7 @@ module.exports = {
     const channel = await this.getChannelFromData(
       data.storage,
       data.varName,
-      cache
+      cache,
     );
 
     if (!channel) return this.callNextAction(cache);
@@ -225,7 +226,7 @@ module.exports = {
         type: options.type,
         parent: options.parent?.id ?? null,
         permissionOverwrites: options.permissionOverwrites?.map((o) =>
-          o.toJSON()
+          o.toJSON(),
         ),
         position: options.position,
         nsfw: options.nsfw,

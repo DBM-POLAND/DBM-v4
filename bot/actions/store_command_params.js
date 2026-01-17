@@ -43,9 +43,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_command_params.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -194,7 +195,7 @@ module.exports = {
       case 0: {
         if (interactionOptions) {
           const result = this.getParameterFromParameterData(
-            interactionOptions.data[index]
+            interactionOptions.data[index],
           );
           if (result) {
             source = result;
@@ -211,7 +212,7 @@ module.exports = {
           const result = [];
           for (let i = 0; i < index; i++) {
             const r = this.getParameterFromParameterData(
-              interactionOptions.data[i]
+              interactionOptions.data[i],
             );
             if (r) {
               result.push(r);
@@ -237,7 +238,7 @@ module.exports = {
       case 2: {
         if (interactionOptions) {
           const options = interactionOptions.data.filter(
-            (option) => option.type === ApplicationCommandOptionType.User
+            (option) => option.type === ApplicationCommandOptionType.User,
           );
           if (options[index]) {
             source = options[index].member ?? options[index].user;
@@ -254,7 +255,7 @@ module.exports = {
       case 3: {
         if (interactionOptions) {
           const options = interactionOptions.data.filter(
-            (option) => option.type === ApplicationCommandOptionType.Role
+            (option) => option.type === ApplicationCommandOptionType.Role,
           );
           if (options[index]) {
             source = options[index].role;
@@ -271,7 +272,7 @@ module.exports = {
       case 4: {
         if (interactionOptions) {
           const options = interactionOptions.data.filter(
-            (option) => option.type === ApplicationCommandOptionType.Channel
+            (option) => option.type === ApplicationCommandOptionType.Channel,
           );
           if (options[index]) {
             source = options[index].channel;
@@ -288,7 +289,8 @@ module.exports = {
       case 5: {
         if (interactionOptions) {
           const options = interactionOptions.data.filter(
-            (option) => option.type === ApplicationCommandOptionType.Mentionable
+            (option) =>
+              option.type === ApplicationCommandOptionType.Mentionable,
           );
           if (options[index]) {
             source =
@@ -312,7 +314,7 @@ module.exports = {
       case 6: {
         if (interactionOptions) {
           const options = interactionOptions.data.filter(
-            (option) => option.type === ApplicationCommandOptionType.Attachment
+            (option) => option.type === ApplicationCommandOptionType.Attachment,
           );
           if (options[index]) {
             source = options[index].attachment;

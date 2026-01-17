@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `Delete ${data.count} messages from ${presets.getChannelText(
       data.channel,
-      data.varName
+      data.varName,
     )}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/delete_bulk_messages.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -111,7 +112,7 @@ module.exports = {
     const source = await this.getChannelFromData(
       data.channel,
       data.varName,
-      cache
+      cache,
     );
     if (!source?.messages) return this.callNextAction(cache);
     let remaining = parseInt(this.evalMessage(data.count, cache), 10);
@@ -147,7 +148,7 @@ module.exports = {
               this.displayError(
                 data,
                 cache,
-                "Error in custom condition:\n" + err.stack
+                "Error in custom condition:\n" + err.stack,
               );
               return false;
             }

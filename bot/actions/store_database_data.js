@@ -28,7 +28,7 @@ module.exports = {
       target = presets.getMessageText(data.server, data.varName4);
     return `${target} -> ${presets.getVariableText(
       data.storage,
-      data.varName5
+      data.varName5,
     )}`;
   },
 
@@ -41,9 +41,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_database_data.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -178,7 +179,7 @@ module.exports = {
       const channel = await this.getChannelFromData(
         data.channel,
         data.varName,
-        cache
+        cache,
       );
       result =
         db.readData(db.DataBase.channels, channel.id, dataName) ||
@@ -199,7 +200,7 @@ module.exports = {
       const message = await this.getMessageFromData(
         data.message,
         data.varName2,
-        cache
+        cache,
       );
       result =
         db.readData(db.DataBase.messages, message.id, dataName) ||
@@ -212,7 +213,7 @@ module.exports = {
       const member = await this.getMemberFromData(
         data.member,
         data.varName3,
-        cache
+        cache,
       );
       result =
         db.readData(db.DataBase.players, member.id, dataName) ||
@@ -225,7 +226,7 @@ module.exports = {
       const server = await this.getServerFromData(
         data.server,
         data.varName4,
-        cache
+        cache,
       );
       result =
         db.readData(db.DataBase.servers, server.id, dataName) ||
@@ -238,7 +239,7 @@ module.exports = {
       result,
       parseInt(data.storage, 10),
       this.evalMessage(data.varName5, cache),
-      cache
+      cache,
     );
     this.callNextAction(cache);
   },

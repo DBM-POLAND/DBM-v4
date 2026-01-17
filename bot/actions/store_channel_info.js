@@ -85,9 +85,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_channel_info.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -246,7 +247,7 @@ module.exports = {
     const channel = await this.getChannelFromData(
       data.channel,
       data.varName,
-      cache
+      cache,
     );
     const info = parseInt(data.info, 10);
 
@@ -321,7 +322,7 @@ module.exports = {
         // is private channel
         if (channel.permissionOverwrites) {
           const everyonePerm = channel.permissionOverwrites.cache.get(
-            channel.guild.id
+            channel.guild.id,
           );
           result = everyonePerm
             ? !everyonePerm.allow.has("ViewChannel")
@@ -380,14 +381,14 @@ module.exports = {
         // is stage live?
         result =
           channel.guild?.stageInstances.cache.some(
-            (si) => si.channelId === channel.id
+            (si) => si.channelId === channel.id,
           ) ?? false;
         break;
       case 28:
         // speakers count
         result = channel.members
           ? Array.from(channel.members.values()).filter(
-              (m) => m.voice.suppress === false
+              (m) => m.voice.suppress === false,
             ).length
           : 0;
         break;
@@ -395,7 +396,7 @@ module.exports = {
         // speakers
         result = channel.members
           ? Array.from(channel.members.values()).filter(
-              (m) => m.voice.suppress === false
+              (m) => m.voice.suppress === false,
             )
           : [];
         break;
@@ -403,7 +404,7 @@ module.exports = {
         // audience count
         result = channel.members
           ? Array.from(channel.members.values()).filter(
-              (m) => m.voice.suppress === true
+              (m) => m.voice.suppress === true,
             ).length
           : 0;
         break;
@@ -411,7 +412,7 @@ module.exports = {
         // audience members
         result = channel.members
           ? Array.from(channel.members.values()).filter(
-              (m) => m.voice.suppress === true
+              (m) => m.voice.suppress === true,
             )
           : [];
         break;

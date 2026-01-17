@@ -34,9 +34,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/edit_string_select_options.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -134,7 +135,7 @@ module.exports = {
     const message = await this.getMessageFromData(
       data.message,
       data.messageVarName,
-      cache
+      cache,
     );
     if (!message || !message.components?.length) {
       this.callNextAction(cache);
@@ -158,7 +159,7 @@ module.exports = {
       if (optionChange.description) {
         newOptionData.description = this.evalMessage(
           optionChange.description,
-          cache
+          cache,
         );
       }
       if (optionChange.emoji) {
@@ -232,24 +233,24 @@ module.exports = {
           .filter(Boolean);
         if (newOptionData) {
           const exists = currentOptions.some(
-            (o) => o.value === newOptionData.value
+            (o) => o.value === newOptionData.value,
           );
           if (!exists) {
             selectBuilder.setOptions([...currentOptions, newOptionData]);
           } else {
             const updated = currentOptions.map((o) =>
-              o.value === newOptionData.value ? { ...o, ...newOptionData } : o
+              o.value === newOptionData.value ? { ...o, ...newOptionData } : o,
             );
             selectBuilder.setOptions(updated);
           }
         } else if (removeOptionValue) {
           const filtered = currentOptions.filter(
-            (o) => o.value !== removeOptionValue
+            (o) => o.value !== removeOptionValue,
           );
           selectBuilder.setOptions(filtered);
         } else if (removeOptionLabel) {
           const filtered = currentOptions.filter(
-            (o) => o.label !== removeOptionLabel
+            (o) => o.label !== removeOptionLabel,
           );
           selectBuilder.setOptions(filtered);
         }

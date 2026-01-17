@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `${presets.getMessageText(
       data.message,
-      data.varName
+      data.varName,
     )} -> ${presets.getVariableText(data.storage, data.varName2)}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_message_data.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -101,7 +102,7 @@ module.exports = {
     const message = await this.getMessageFromData(
       data.message,
       data.varName,
-      cache
+      cache,
     );
     const dataName = this.evalMessage(data.dataName, cache);
     const defVal = this.eval(this.evalMessage(data.defaultVal, cache), cache);

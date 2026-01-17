@@ -28,9 +28,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/create_forum_channel.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -260,25 +261,25 @@ module.exports = {
       if (defaultForumLayout !== undefined) {
         await channel.setDefaultForumLayout(
           forumLayoutMap[defaultForumLayout],
-          reason
+          reason,
         );
       }
       if (defaultAutoArchiveDuration !== undefined) {
         await channel.setDefaultAutoArchiveDuration(
           autoArchiveMap[defaultAutoArchiveDuration],
-          reason
+          reason,
         );
       }
       if (defaultReactionEmoji) {
         await channel.setDefaultReactionEmoji(
           { emoji: defaultReactionEmoji },
-          reason
+          reason,
         );
       }
       if (defaultSortOrder !== undefined) {
         await channel.setDefaultSortOrder(
           sortOrderMap[defaultSortOrder],
-          reason
+          reason,
         );
       }
       if (data.requireTag && tags.length > 0) {

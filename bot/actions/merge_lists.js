@@ -27,9 +27,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/merge_lists.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -80,12 +81,12 @@ module.exports = {
     const list = await this.getList(
       parseInt(data.list, 10),
       this.evalMessage(data.varName, cache),
-      cache
+      cache,
     );
     const list2 = await this.getList(
       parseInt(data.list2, 10),
       this.evalMessage(data.varName2, cache),
-      cache
+      cache,
     );
     const result = list.concat(list2);
     if (result) {

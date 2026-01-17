@@ -79,9 +79,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_bot_client_info.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -320,7 +321,7 @@ module.exports = {
         break;
       case 15: // Memory (Ram) Usage // Deprecated in 1.8.8
         result = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
-          2
+          2,
         )}%`;
         break;
       case 16: // Bot Guilds Objects
@@ -409,7 +410,7 @@ module.exports = {
         break;
       case 41: // Used Memory (GB)
         result = ((os.totalmem() - os.freemem() / 1024) / 1024 / 1024).toFixed(
-          2
+          2,
         );
         break;
       case 42: // Used Memory (MB)
@@ -417,7 +418,7 @@ module.exports = {
         break;
       case 43: // Used Memory (%)
         result = Math.floor(
-          ((os.totalmem() - os.freemem()) / os.totalmem()) * 100
+          ((os.totalmem() - os.freemem()) / os.totalmem()) * 100,
         );
         break;
       case 44: // Bot Owner ID

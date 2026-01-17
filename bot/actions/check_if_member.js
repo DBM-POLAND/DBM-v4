@@ -55,9 +55,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/check_if_member.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -135,7 +136,7 @@ module.exports = {
     const memberOrUser = await this.getMemberFromData(
       data.member,
       data.varName,
-      cache
+      cache,
     );
     let member;
     if (memberOrUser instanceof User) {
@@ -227,42 +228,42 @@ module.exports = {
         // is streaming?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Streaming
+            (a) => a.type === ActivityType.Streaming,
           ) ?? false;
         break;
       case 18:
         // is playing?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Playing
+            (a) => a.type === ActivityType.Playing,
           ) ?? false;
         break;
       case 19:
         // is listening?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Listening
+            (a) => a.type === ActivityType.Listening,
           ) ?? false;
         break;
       case 20:
         // is watching?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Watching
+            (a) => a.type === ActivityType.Watching,
           ) ?? false;
         break;
       case 21:
         // is competing?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Competing
+            (a) => a.type === ActivityType.Competing,
           ) ?? false;
         break;
       case 22:
         // is custom status?
         result =
           member.presence?.activities?.some(
-            (a) => a.type === ActivityType.Custom
+            (a) => a.type === ActivityType.Custom,
           ) ?? false;
         break;
       default:

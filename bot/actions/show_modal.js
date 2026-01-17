@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/show_modal.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -337,7 +338,7 @@ module.exports = {
       if (c.componentType === "textDisplay") {
         // Text Display
         const text = new TextDisplayBuilder().setContent(
-          this.evalMessage(c.textDisplay, cache)
+          this.evalMessage(c.textDisplay, cache),
         );
         modal.addTextDisplayComponents(text);
       } else {
@@ -366,7 +367,7 @@ module.exports = {
                 .setPlaceholder(placeholder)
                 .setRequired(required)
                 .setStyle(style)
-                .setValue(value)
+                .setValue(value),
             );
           if (description) label.setDescription(description);
           modal.addLabelComponents(label);
@@ -398,7 +399,7 @@ module.exports = {
                   label: o.label,
                   value: o.value,
                 },
-                cache
+                cache,
               );
               options.push(option);
             }
@@ -478,7 +479,7 @@ module.exports = {
                 .setCustomId(customId)
                 .setMinValues(minValues)
                 .setMaxValues(maxValues)
-                .setRequired(required)
+                .setRequired(required),
             );
           if (description) label.setDescription(description);
           modal.addLabelComponents(label);
@@ -556,7 +557,7 @@ module.exports = {
             }
 
             this.callNextAction(cache);
-          }
+          },
         );
 
         cache.interaction.showModal(modal);
@@ -564,7 +565,7 @@ module.exports = {
         this.displayError(
           data,
           cache,
-          "Cannot show modal from current interaction, perhaps attempting to show modal multiple times?"
+          "Cannot show modal from current interaction, perhaps attempting to show modal multiple times?",
         );
         this.callNextAction(cache);
       }

@@ -18,7 +18,7 @@ module.exports = {
   subtitle(data, presets) {
     return `Gets a Transcript from a Channel: ${presets.getChannelText(
       data.channel,
-      data.varName1
+      data.varName1,
     )}`;
   },
 
@@ -31,9 +31,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/create_transcript.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -151,7 +152,7 @@ module.exports = {
     const { document } = this;
     const storageType = document.getElementById("storageType");
     const storageFolderWrapper = document.getElementById(
-      "storageFolderWrapper"
+      "storageFolderWrapper",
     );
     function updateStorageWrapper() {
       if (storageType.value !== "2") {
@@ -180,7 +181,7 @@ module.exports = {
       this.displayError(
         data,
         cache,
-        "[discord-html-transcripts] Version 3.2.0 is required!"
+        "[discord-html-transcripts] Version 3.2.0 is required!",
       );
       return;
     }
@@ -189,7 +190,7 @@ module.exports = {
     const channel = await this.getChannelFromData(
       data.channel,
       data.varName1,
-      cache
+      cache,
     );
     const fileName =
       this.evalMessage(data.fileName, cache) || "transcript.html";

@@ -34,9 +34,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/jump_to_anchor.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -91,7 +92,7 @@ module.exports = {
   action(cache) {
     const id = this.evalMessage(
       cache.actions[cache.index].jump_to_anchor,
-      cache
+      cache,
     );
     this.anchorJump(id, cache);
   },
@@ -103,11 +104,11 @@ module.exports = {
   mod(DBM) {
     DBM.Actions.anchorJump = function anchorJump(id, cache) {
       const anchorIndex = cache.actions.findIndex(
-        (a) => a.name === "Create Anchor" && a.anchor_id === id
+        (a) => a.name === "Create Anchor" && a.anchor_id === id,
       );
       if (anchorIndex === -1)
         throw new Error(
-          "There was not an anchor found with that exact anchor ID!"
+          "There was not an anchor found with that exact anchor ID!",
         );
       cache.index = anchorIndex - 1;
       this.callNextAction(cache);
@@ -115,7 +116,7 @@ module.exports = {
 
     DBM.Actions.anchorExist = function anchorExist(id, cache) {
       const anchorIndex = cache.actions.findIndex(
-        (a) => a.name === "Create Anchor" && a.anchor_id === id
+        (a) => a.name === "Create Anchor" && a.anchor_id === id,
       );
       if (anchorIndex === -1) {
         return false;

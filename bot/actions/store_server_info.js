@@ -88,9 +88,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/store_server_info.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -302,7 +303,7 @@ module.exports = {
     const targetServer = await this.getServerFromData(
       data.server,
       data.varName,
-      cache
+      cache,
     );
 
     if (!targetServer) {
@@ -431,14 +432,14 @@ module.exports = {
         // server do not disturb members count
         await fetchMembers(true);
         result = targetServer.members.cache.filter(
-          (m) => m.presence?.status === PresenceUpdateStatus.DoNotDisturb
+          (m) => m.presence?.status === PresenceUpdateStatus.DoNotDisturb,
         ).size;
         break;
       case 27:
         // server online members count
         await fetchMembers(true);
         result = targetServer.members.cache.filter(
-          (m) => m.presence?.status === PresenceUpdateStatus.Online
+          (m) => m.presence?.status === PresenceUpdateStatus.Online,
         ).size;
         break;
       case 28:
@@ -446,14 +447,14 @@ module.exports = {
         await fetchMembers(true);
         result = targetServer.members.cache.filter(
           (m) =>
-            !m.presence || m.presence.status === PresenceUpdateStatus.Offline
+            !m.presence || m.presence.status === PresenceUpdateStatus.Offline,
         ).size;
         break;
       case 29:
         // server idle members count
         await fetchMembers(true);
         result = targetServer.members.cache.filter(
-          (m) => m.presence?.status === PresenceUpdateStatus.Idle
+          (m) => m.presence?.status === PresenceUpdateStatus.Idle,
         ).size;
         break;
       case 30:
@@ -493,13 +494,13 @@ module.exports = {
         result = targetServer.channels.cache.filter(
           (c) =>
             c.type === ChannelType.GuildText ||
-            c.type === ChannelType.GuildAnnouncement
+            c.type === ChannelType.GuildAnnouncement,
         ).size;
         break;
       case 39:
         // server voice channels count
         result = targetServer.channels.cache.filter(
-          (c) => c.type === ChannelType.GuildVoice
+          (c) => c.type === ChannelType.GuildVoice,
         ).size;
         break;
       case 40:

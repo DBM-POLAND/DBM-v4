@@ -30,9 +30,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/disable_command.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -136,14 +137,14 @@ module.exports = {
       memberOrRole = await this.getMemberFromData(
         data.fromTarget.member,
         data.fromTarget.memberVarName,
-        cache
+        cache,
       );
       resolvedType = "USER";
     } else {
       memberOrRole = await this.getRoleFromData(
         data.fromTarget.role,
         data.fromTarget.roleVarName,
-        cache
+        cache,
       );
       resolvedType = "ROLE";
     }
@@ -158,7 +159,7 @@ module.exports = {
     const disable = data.disable === "disable";
 
     let command = Bot.bot.application.commands.cache.find(
-      (com) => com.name === name
+      (com) => com.name === name,
     );
     if (!command) {
       command = cache.server.commands.cache.find((com) => com.name === name);

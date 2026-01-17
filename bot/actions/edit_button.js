@@ -29,9 +29,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/edit_button.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -158,7 +159,7 @@ module.exports = {
     const rv = d.querySelector("retrieve-from-variable[allowNone]");
     if (rv) {
       const optionNothing = Array.from(rv.querySelectorAll("option")).find(
-        (opt) => opt.text === "Nothing"
+        (opt) => opt.text === "Nothing",
       );
       if (optionNothing) optionNothing.remove();
     }
@@ -226,23 +227,23 @@ module.exports = {
             });
             message = messages.find((msg) =>
               msg.components.some((row) =>
-                row.components.some((btn) => btn.customId === buttonId)
-              )
+                row.components.some((btn) => btn.customId === buttonId),
+              ),
             );
           } catch (err) {
             // this.displayError(data, cache, err);
           }
           if (!message) {
             const channels = interaction.guild.channels.cache.filter((c) =>
-              c.isTextBased()
+              c.isTextBased(),
             );
             for (const ch of channels.values()) {
               try {
                 const messages = await ch.messages.fetch({ limit: 100 });
                 message = messages.find((msg) =>
                   msg.components.some((row) =>
-                    row.components.some((btn) => btn.customId === buttonId)
-                  )
+                    row.components.some((btn) => btn.customId === buttonId),
+                  ),
                 );
                 if (message) break;
               } catch {
@@ -254,7 +255,7 @@ module.exports = {
           message = this.getVariable(
             parseInt(data.message, 10),
             this.evalMessage(data.varName, cache),
-            cache
+            cache,
           );
         }
       }
@@ -296,8 +297,8 @@ module.exports = {
               row.components.map((c) =>
                 c.customId === buttonToEdit.customId
                   ? button
-                  : ButtonBuilder.from(c)
-              )
+                  : ButtonBuilder.from(c),
+              ),
             );
           });
           await message.edit({ components: newComponents });
@@ -310,7 +311,7 @@ module.exports = {
           this.displayError(
             data,
             cache,
-            "Components V2 Currently Unsupported!"
+            "Components V2 Currently Unsupported!",
           );
           return false;
         } catch {

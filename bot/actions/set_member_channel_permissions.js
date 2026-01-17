@@ -28,9 +28,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/set_member_channel_permissions.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -98,12 +99,12 @@ module.exports = {
     const channel = await this.getChannelFromData(
       data.storage,
       data.varName,
-      cache
+      cache,
     );
     const member = await this.getMemberFromData(
       data.member,
       data.varName2,
-      cache
+      cache,
     );
     const reason = this.evalMessage(data.reason, cache) || undefined;
     let changeTo;
@@ -113,7 +114,7 @@ module.exports = {
     const permissions = this.getVariable(
       parseInt(data.perms, 10),
       this.evalMessage(data.varNamePerms, cache),
-      cache
+      cache,
     );
     const options = {};
     if (Array.isArray(permissions)) {

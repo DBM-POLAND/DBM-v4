@@ -35,9 +35,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/loop_through_numbers.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -132,10 +133,10 @@ module.exports = {
     let valid = isNaN(startNum)
       ? 1
       : isNaN(endNum)
-      ? 2
-      : isNaN(increment)
-      ? 3
-      : 0;
+        ? 2
+        : isNaN(increment)
+          ? 3
+          : 0;
     if (valid === 0) {
       if (increment === 0) {
         valid = 4;
@@ -150,7 +151,7 @@ module.exports = {
         this.displayError(
           data,
           cache,
-          `Start Number (${startNumText}) is not a valid number.`
+          `Start Number (${startNumText}) is not a valid number.`,
         );
         break;
       }
@@ -158,7 +159,7 @@ module.exports = {
         this.displayError(
           data,
           cache,
-          `End Number (${endNumText}) is not a valid number.`
+          `End Number (${endNumText}) is not a valid number.`,
         );
         break;
       }
@@ -166,7 +167,7 @@ module.exports = {
         this.displayError(
           data,
           cache,
-          `Increment (${incrementText}) is not a valid number.`
+          `Increment (${incrementText}) is not a valid number.`,
         );
         break;
       }
@@ -179,7 +180,7 @@ module.exports = {
         this.displayError(
           data,
           cache,
-          `Increment detected to cause infinite loop.`
+          `Increment detected to cause infinite loop.`,
         );
         break;
       }

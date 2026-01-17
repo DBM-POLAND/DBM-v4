@@ -33,9 +33,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/send_json_to_webapi.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -186,7 +187,7 @@ module.exports = {
 
     if (o.username && o.password) {
       headersObj["Authorization"] = `Basic ${Buffer.from(
-        o.username + ":" + o.password
+        o.username + ":" + o.password,
       ).toString("base64")}`;
     } else if (o.token) {
       headersObj["Authorization"] = `Bearer ${o.token}`;
@@ -230,7 +231,7 @@ module.exports = {
       response,
       parseInt(data.storage, 10),
       this.evalMessage(data.varName, cache),
-      cache
+      cache,
     );
     this.callNextAction(cache);
   },

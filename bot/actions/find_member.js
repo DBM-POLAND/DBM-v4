@@ -28,9 +28,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/find_member.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -107,7 +108,7 @@ module.exports = {
     const server = await this.getServerFromData(
       data.server,
       data.varName,
-      cache
+      cache,
     );
     const info = parseInt(data.info, 10);
     const find = this.evalMessage(data.find, cache);
@@ -148,7 +149,7 @@ module.exports = {
         break;
       case 5:
         result = members.find((m) =>
-          m.roles.cache.some((r) => r.name === find)
+          m.roles.cache.some((r) => r.name === find),
         );
         break;
       case 6:

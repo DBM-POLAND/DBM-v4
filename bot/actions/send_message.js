@@ -46,7 +46,7 @@ module.exports = {
         default:
           targetText = `Edit ${presets.getVariableText(
             data.editMessage,
-            data.editMessageVarName
+            data.editMessageVarName,
           )}`;
       }
     }
@@ -97,9 +97,10 @@ module.exports = {
     modVersion: "1.0.0",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://discord.gg/9HYB4n3Dz4",
+    help: "https://dc.dbm-poland.site",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl: "",
+    downloadUrl:
+      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/send_message.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -922,7 +923,7 @@ module.exports = {
     const target = await this.getSendReplyTarget(
       parseInt(data.channel, 10),
       this.evalMessage(data.varName, cache),
-      cache
+      cache,
     );
     let defaultTime = 60000;
     let awaitResponses = [];
@@ -932,7 +933,7 @@ module.exports = {
         this.getVariable(
           parseInt(data.editMessage, 10),
           this.evalMessage(data.editMessageVarName, cache),
-          cache
+          cache,
         ) || cache.interaction.message;
     }
 
@@ -975,7 +976,7 @@ module.exports = {
               value: f.value,
               inline: f.inline,
             },
-            cache
+            cache,
           );
           fields.push(field);
         }
@@ -985,7 +986,7 @@ module.exports = {
               name: e.author,
               iconURL: await this.resolveAttachmentUrl(
                 this.evalIfPossible(e.authorIcon, cache),
-                embedFiles
+                embedFiles,
               ),
               url: e.authorUrl,
             },
@@ -996,22 +997,22 @@ module.exports = {
               text: e.footerText,
               iconURL: await this.resolveAttachmentUrl(
                 this.evalIfPossible(e.footerIconUrl, cache),
-                embedFiles
+                embedFiles,
               ),
             },
             image: await this.resolveAttachmentUrl(
               this.evalIfPossible(e.imageUrl, cache),
-              embedFiles
+              embedFiles,
             ),
             thumbnail: await this.resolveAttachmentUrl(
               this.evalIfPossible(e.thumbUrl, cache),
-              embedFiles
+              embedFiles,
             ),
             timestamp: timestamp,
             title: e.title,
             url: e.url,
           },
-          cache
+          cache,
         );
         embeds.push(embed);
       }
@@ -1045,7 +1046,7 @@ module.exports = {
               text: a.pollAnswer,
               emoji: a.pollEmoji,
             },
-            cache
+            cache,
           );
           answers.push(answer);
         }
@@ -1056,7 +1057,7 @@ module.exports = {
             allowMultiselect: data.pollAllowMultipleAnswers,
             duration: data.pollDuration,
           },
-          cache
+          cache,
         );
         return poll;
       }
@@ -1086,7 +1087,7 @@ module.exports = {
             style: b.type,
             url: b.url,
           },
-          cache
+          cache,
         );
         buttons.push({ button: button, row: row, time: time, mode: mode });
         if (b.mode !== "PERSISTENT") {
@@ -1107,14 +1108,14 @@ module.exports = {
           buttons = buttons;
           if (msgToEdit._awaitResponses?.length > 0) {
             const oldButtons = msgToEdit._awaitResponses.filter(
-              (r) => r.type === "BUTTON"
+              (r) => r.type === "BUTTON",
             );
             const newButtons = awaitResponses.filter(
-              (r) => r.type === "BUTTON"
+              (r) => r.type === "BUTTON",
             );
             if (data.overwriteButtons && newButtons.length > 0) {
               msgToEdit._awaitResponses = msgToEdit._awaitResponses.filter(
-                (r) => r.type !== "BUTTON"
+                (r) => r.type !== "BUTTON",
               );
             } else {
               awaitResponses = oldButtons.concat(newButtons);
@@ -1166,7 +1167,7 @@ module.exports = {
                 label: o.label,
                 value: o.value,
               },
-              cache
+              cache,
             );
             options.push(option);
           }
@@ -1179,7 +1180,7 @@ module.exports = {
               options: options,
               placeholder: s.placeholder,
             },
-            cache
+            cache,
           );
         } else if (type === "UserSelectMenu") {
           selectMenu = this.generateUserSelectMenu(
@@ -1191,7 +1192,7 @@ module.exports = {
               maxValues: s.max,
               placeholder: s.placeholder,
             },
-            cache
+            cache,
           );
         } else if (type === "RoleSelectMenu") {
           selectMenu = this.generateRoleSelectMenu(
@@ -1203,7 +1204,7 @@ module.exports = {
               maxValues: s.max,
               placeholder: s.placeholder,
             },
-            cache
+            cache,
           );
         } else if (type === "MentionableSelectMenu") {
           selectMenu = this.generateMentionableSelectMenu(
@@ -1215,7 +1216,7 @@ module.exports = {
               maxValues: s.max,
               placeholder: s.placeholder,
             },
-            cache
+            cache,
           );
         } else if (type === "ChannelSelectMenu") {
           const channelTypes = [];
@@ -1237,7 +1238,7 @@ module.exports = {
               maxValues: s.max,
               placeholder: s.placeholder,
             },
-            cache
+            cache,
           );
         }
         selects.push({
@@ -1264,14 +1265,14 @@ module.exports = {
           selects = selects;
           if (msgToEdit._awaitResponses?.length > 0) {
             const oldSelects = msgToEdit._awaitResponses.filter(
-              (r) => r.type === "SELECT"
+              (r) => r.type === "SELECT",
             );
             const newSelects = awaitResponses.filter(
-              (r) => r.type === "SELECT"
+              (r) => r.type === "SELECT",
             );
             if (data.overwriteSelects && newSelects.length > 0) {
               msgToEdit._awaitResponses = msgToEdit._awaitResponses.filter(
-                (r) => r.type !== "SELECT"
+                (r) => r.type !== "SELECT",
               );
             } else {
               awaitResponses = oldSelects.concat(newSelects);
@@ -1442,22 +1443,22 @@ module.exports = {
                         interaction,
                         response.data,
                         cache.meta,
-                        tempVariables
+                        tempVariables,
                       );
                     } else {
                       this.preformActionsFromSelectInteraction(
                         interaction,
                         response.data,
                         cache.meta,
-                        tempVariables
+                        tempVariables,
                       );
                     }
                   }
-                }
+                },
               );
             }
           },
-        }
+        },
       );
       const varName2 = this.evalMessage(data.varName2, cache);
       const storage = parseInt(data.storage, 10);
