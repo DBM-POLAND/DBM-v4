@@ -47,23 +47,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          RELEASE_NOTES=$(printf "Bot version: v%s\nDiscordJS version: %s" "$BOT_VERSION" "$DISCORDJS_VERSION")
+
           echo "Updating release '$DBM_VERSION' (tag: $EXISTING_TAG)"
 
-          # usuń stare assety
           gh release view "$EXISTING_TAG" --json assets \
             | jq -r '.assets[].name' \
             | xargs -I {} gh release delete-asset "$EXISTING_TAG" {} -y
 
-          # edytuj release (NIE ruszamy tagu!)
           gh release edit "$EXISTING_TAG" \
             --title "$DBM_VERSION" \
-            --notes "$(cat <<EOF
-            Bot version: v${BOT_VERSION}
-            DiscordJS version: ${DISCORDJS_VERSION}
-            EOF
-            )"
+            --notes "$RELEASE_NOTES"
 
-          # dodaj nowe assety
           gh release upload "$EXISTING_TAG" bot.zip dbm.zip --clobber
 
       # 🔄 JEŚLI NIE ISTNIEJE → ODBIERZ latest POPRZEDNIEMU
@@ -79,22 +74,19 @@ jobs:
             | jq -r '.[] | select(.tagName=="latest") | .name')
 
           if [ -n "$PREV_TAG" ] && [ -n "$PREV_NAME" ]; then
-            echo "Removing latest from previous release ($PREV_NAME)"
             gh release edit "$PREV_TAG" --tag "$PREV_NAME"
           fi
 
-      # 🆕 STWÓRZ NOWY RELEASE Z TAGIEM latest
+      # 🆕 NOWY RELEASE
       - name: Create new release
         if: env.EXISTING_TAG == ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          RELEASE_NOTES=$(printf "Bot version: v%s\nDiscordJS version: %s" "$BOT_VERSION" "$DISCORDJS_VERSION")
+
           gh release create latest \
             --title "$DBM_VERSION" \
-            --notes "$(cat <<EOF
-            Bot version: v${BOT_VERSION}
-            DiscordJS version: ${DISCORDJS_VERSION}
-            EOF
-            )" \
+            --notes "$RELEASE_NOTES" \
             --target main \
             bot.zip dbm.zip
