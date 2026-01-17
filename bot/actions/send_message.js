@@ -24,37 +24,58 @@ module.exports = {
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
   subtitle(data, presets) {
-    let defaultText = "";
-    if (data.message) {
-      defaultText = `"${data.message.replace(/[\n\r]+/, " ↲ ")}"`;
-    } else if (data.embeds?.length > 0) {
-      defaultText = `${data.embeds.length} Embeds`;
-    } else if (data.attachments?.length > 0) {
-      defaultText = `${data.attachments.length} Attachments`;
-    } else if (data.buttons?.length > 0 || data.selectMenus?.length > 0) {
-      defaultText = `${data.buttons.length} Buttons and ${data.selectMenus.length} Select Menus`;
-    } else if (data.editMessage && data.editMessage !== "0") {
-      defaultText = `Message Options - ${presets.getVariableText(
-        data.editMessage,
-        data.editMessageVarName
-      )}`;
-    } else {
-      defaultText = `Nothing (might cause error)`;
+    if (data.actionDescription) {
+      return `<span style="color: ${
+        data.actionDescriptionColor || "#ffffff"
+      };">${data.actionDescription}</span>`;
     }
-    if (data.dontReply) {
-      defaultText = `Store Data: ${defaultText}`;
-    } else {
-      defaultText = `${presets.getSendReplyTargetText(
-        data.channel,
-        data.varName
-      )}: ${defaultText}`;
+    let targetText = presets.getSendReplyTargetText(data.channel, data.varName);
+    if (data.dontSend) {
+      targetText = `Don't Send`;
+    } else if (data.editMessage !== "0") {
+      switch (data.editMessage) {
+        case "intUpdate":
+          targetText = "Interaction Update";
+          break;
+        case "deferUpdate":
+          targetText = "Defer Update";
+          break;
+        case "replyUpdate":
+          targetText = "Reply Update";
+          break;
+        default:
+          targetText = `Edit ${presets.getVariableText(
+            data.editMessage,
+            data.editMessageVarName
+          )}`;
+      }
     }
-    const userDesc = data.actionDescription?.toString().trim();
-    if (userDesc) {
-      const color = data.actionDescriptionColor || "#ffffff";
-      return `<span style="color: ${color};">${userDesc}</span>`;
+    let messageText;
+    if (data.message) messageText = data.message;
+    else if (!data.message) {
+      if (data.embeds.length) {
+        messageText = `${data.embeds.length} ${
+          data.embeds.length === 1 ? "Embed" : "Embeds"
+        }`;
+      } else if (data.pollAnswers.length) {
+        messageText = `Poll: ${data.pollQuestion}`;
+      } else if (data.buttons.length) {
+        messageText = `${data.buttons.length} ${
+          data.buttons.length === 1 ? "Button" : "Buttons"
+        }`;
+      } else if (data.selectMenus.length) {
+        messageText = `${data.selectMenus.length} ${
+          data.selectMenus.length === 1 ? "Select Menu" : "Select Menus"
+        }`;
+      } else if (data.attachments.length) {
+        messageText = `${data.attachments.length} ${
+          data.attachments.length === 1 ? "Attachment" : "Attachments"
+        }`;
+      } else {
+        messageText = "Nothing (might cause error)";
+      }
     }
-    return defaultText;
+    return `${targetText} - ${messageText}`;
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -703,24 +724,20 @@ module.exports = {
       <dbm-checkbox id="suppressNotifications" label="Suppress Notifications"></dbm-checkbox>
     </div>
 
-    <br>
-    <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px; width: 100%;">
-
-    <table style="width:100%;">
-      <tr>
-        <td>
-          <span class="dbminputlabel">Action Description</span><br>
-          <input type="text" class="round" id="actionDescription" placeholder="Leave blank for default...">
-        </td>
-        <td style="padding:0px 0px 0px 10px; width:55px;">
-          <div style="float:left; padding:0px 0px 0px 7px; margin-top:-5px"></div><br>
-          <input type="color" value="#ffffff" class="round" id="actionDescriptionColor">
-        </td>
-      </tr>
-    </table>
-
-    <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px; width: 100%;">
-    <br>
+      <br>
+      <hr class="subtlebar">
+      <br>
+      <div style="float: left; width: 79%;">
+        <span class="dbminputlabel">Action Description</span>
+        <input type="text" class="round" id="actionDescription" placeholder="Leave blank for default...">
+      </div>
+      <div style="float: right; width: 19%;">
+        <span class="dbminputlabel">Color</span>
+        <input type="color" value="#ffffff" class="round" id="actionDescriptionColor">
+      </div>
+      <br><br><br>
+      <hr class="subtlebar">
+      <br>
 
     <div style="padding-bottom: 12px;">
       <retrieve-from-variable allowNone dropdownLabel="Message/Options to Edit" selectId="editMessage" variableInputId="editMessageVarName" variableContainerId="editMessageVarNameContainer">

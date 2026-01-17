@@ -59,7 +59,39 @@ module.exports = {
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
   subtitle(data, presets) {
-    return `test`;
+    if (data.actionDescription) {
+      return `<span style="color: ${
+        data.actionDescriptionColor || "#ffffff"
+      };">${data.actionDescription}</span>`;
+    }
+    let targetText = presets.getSendReplyTargetText(data.channel, data.varName);
+    if (data.dontSend) {
+      targetText = `Don't Send`;
+    } else if (data.editMessage !== "0") {
+      switch (data.editMessage) {
+        case "intUpdate":
+          targetText = "Interaction Update";
+          break;
+        case "deferUpdate":
+          targetText = "Defer Update";
+          break;
+        case "replyUpdate":
+          targetText = "Reply Update";
+          break;
+        default:
+          targetText = `Edit ${presets.getVariableText(
+            data.editMessage,
+            data.editMessageVarName
+          )}`;
+      }
+    }
+    const messageText =
+      data.components.length === 0
+        ? "Nothing (might cause error)"
+        : `${data.components.length} ${
+            data.components.length === 1 ? "Component" : "Components"
+          }`;
+    return `${targetText} - ${messageText}`;
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
@@ -105,6 +137,8 @@ module.exports = {
     "allowMentionEveryone",
     "allowMentionCommandUser",
     "suppressNotifications",
+    "actionDescription",
+    "actionDescriptionColor",
     "editMessage",
     "editMessageVarName",
     "storage",
@@ -986,6 +1020,17 @@ module.exports = {
         <dbm-checkbox id="suppressNotifications" label="Suppress Notifications"></dbm-checkbox>
       </div>
       <br>
+      <hr class="subtlebar">
+      <br>
+      <div style="float: left; width: 79%;">
+        <span class="dbminputlabel">Action Description</span>
+        <input type="text" class="round" id="actionDescription" placeholder="Leave blank for default...">
+      </div>
+      <div style="float: right; width: 19%;">
+        <span class="dbminputlabel">Color</span>
+        <input type="color" value="#ffffff" class="round" id="actionDescriptionColor">
+      </div>
+      <br><br><br>
       <hr class="subtlebar">
       <br>
       <retrieve-from-variable allowNone dropdownLabel="Message/Options to Edit" selectId="editMessage" variableInputId="editMessageVarName" variableContainerId="editMessageVarNameContainer">
