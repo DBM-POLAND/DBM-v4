@@ -45,17 +45,20 @@ jobs:
       - name: Create version branch if not exists
         if: github.ref_name == 'main'
         run: |
-          BOT_VERSION=$(node -p "require('./bot/package.json').version")
-          BRANCH_NAME="v${BOT_VERSION}"
+          if [ -f bot/package.json ]; then
+            BOT_VERSION=$(node -p "require('./bot/package.json').version")
+            BRANCH_NAME="v${BOT_VERSION}"
 
-          # sprawdź czy branch istnieje w remote
-          if git ls-remote --exit-code origin $BRANCH_NAME; then
-            echo "Branch $BRANCH_NAME already exists"
-          else
-            echo "Creating branch $BRANCH_NAME"
-            git checkout -b $BRANCH_NAME
-            git push origin $BRANCH_NAME
-            git checkout main
+            # sprawdź czy branch istnieje w remote
+            if git ls-remote --exit-code origin $BRANCH_NAME; then
+              echo "Branch $BRANCH_NAME already exists"
+            else
+              echo "Creating branch $BRANCH_NAME"
+              git checkout -b $BRANCH_NAME
+              git push origin $BRANCH_NAME
+              git checkout main
+            fi
+          fi
 
       # 5️⃣ Tworzenie ZIP-ów
       - name: Create ZIP files
