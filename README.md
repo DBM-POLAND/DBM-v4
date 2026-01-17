@@ -7,7 +7,7 @@
     <h1><b>
       DiscordJS - 14.25.1
       <br>
-      DBM - 4.1.0
+      DBM - 4.0.0
       <br>
       <a href="https://dc.dbm-poland.site">
         <img src="https://img.shields.io/discord/1301396266479124501?label=Discord" alt="Discord" />
