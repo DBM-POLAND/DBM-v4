@@ -1,4 +1,4 @@
-name: Update Version Branch
+name: Update Branch
 
 on:
   push:
@@ -14,9 +14,6 @@ jobs:
   update_branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait 10 seconds
-        run: sleep 10
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -40,8 +37,9 @@ jobs:
           else
             git checkout --orphan $BRANCH_NAME
             git rm -rf . || true
+          fi
 
-      - name: Copy only dbm, bot, docs/img, LICENSE and README.md
+      - name: Copy only dbm, docs/img, bot, LICENSE and README.md
         run: |
           git checkout main -- dbm bot docs/img LICENSE README.md || true
 
