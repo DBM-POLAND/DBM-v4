@@ -1,14 +1,10 @@
 name: Update README
-
 on:
   push:
-    branches: [main]
     paths:
       - "bot/package.json"
-
 permissions:
   contents: write
-
 jobs:
   update-readme:
     runs-on: ubuntu-latest
@@ -22,9 +18,7 @@ jobs:
       - name: Get Versions
         id: versions
         run: |
-          # Pobranie wersji Discord.js (usuń ^)
           DISCORD_JS=$(node -p "require('./bot/package.json').dependencies['discord.js'].replace('^','')")
-          # Pobranie wersji DBM
           DBM=$(node -p "require('./bot/package.json').version")
           echo "discord_js_version=$DISCORD_JS" >> $GITHUB_OUTPUT
           echo "dbm_version=$DBM" >> $GITHUB_OUTPUT
