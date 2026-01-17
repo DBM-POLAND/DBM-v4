@@ -7,7 +7,7 @@
     <h1><b>
       DiscordJS - 14.25.1
       <br>
-      DBM - 4.1.0
+      DBM - 4.0.0
       <br>
       <a href="https://dc.dbm-poland.site">
         <img src="https://img.shields.io/discord/1301396266479124501?label=Discord" alt="Discord" />
@@ -33,4 +33,22 @@
 
 # How to Download?
 
-> To download the updated bot and dbm files, go to our website _(link above)_, where you will find the guide and downloads.
+> Below is a guide on how to download and update the dbm program and bot to the latest version of discord.js.
+>
+> 1. [Click here to download the bot](https://github.com/shadoow051/DBM-v14/releases/download/latest/bot.zip)
+> 2. [Click here to download the dbm files.](https://github.com/shadoow051/DBM-v14/releases/download/latest/dbm.zip)
+> 3. The bot.zip file is a ready-made bot, so just extract it to your desktop.
+> 4. - The dbm.zip file contains the updated dbm program files, extract it to your desktop.
+>    - Open the extracted dbm folder.
+>    - Move the files from the extracted dbm folder to the main dbm folder (default path is `C:\Program Files (x86)\Steam\steamapps\common\Discord Bot Maker`).
+
+# How to Update?
+
+> Below is a guide on how to update your bot/actions/events/...
+>
+> 1. Open Discord Bot Maker.
+> 2. To the right of the Settings tab there is a new tab, open it.
+> 3. Find the "Type of Update to Download" option.
+> 4. Select the appropriate update option you wish to install.
+> 5. After clicking the "Download" button, the latest update will be downloaded.
+> 6. Restart Discord Bot Maker and you're done!
