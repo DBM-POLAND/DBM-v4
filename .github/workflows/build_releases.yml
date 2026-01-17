@@ -1,0 +1,83 @@
+name: Build Releases
+
+on:
+  push:
+    paths:
+      - "bot/**"
+      - "dbm/**"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set version variables
+        id: vars
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            echo "version=latest" >> $GITHUB_OUTPUT
+            echo "save_docs=true" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+            echo "save_docs=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Read Discord.js version
+        id: discordjs
+        run: |
+          VERSION=$(node -e "const p=require('./bot/package.json'); const v=(p.dependencies?.['discord.js'] || p.devDependencies?.['discord.js'] || 'unknown'); console.log(v.replace(/^[^0-9]*/, ''))")
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Create ZIP files
+        run: |
+          zip -r ${{ steps.vars.outputs.version }}_bot.zip bot
+          zip -r ${{ steps.vars.outputs.version }}_dbm.zip dbm
+
+      - name: Save ZIPs to docs/downloads (main only)
+        if: steps.vars.outputs.save_docs == 'true'
+        run: |
+          mkdir -p docs/downloads
+          mv ${{ steps.vars.outputs.version }}_bot.zip docs/downloads/latest_bot.zip
+          mv ${{ steps.vars.outputs.version }}_dbm.zip docs/downloads/latest_dbm.zip
+
+      - name: Commit ZIPs to main
+        if: steps.vars.outputs.save_docs == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add docs/downloads/latest_bot.zip docs/downloads/latest_dbm.zip
+
+          if git diff --cached --quiet; then
+            echo "No ZIP changes"
+          else
+            git commit -m "Update latest download ZIPs"
+            git push
+          fi
+
+      - name: Delete old release
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: ${{ steps.vars.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.version }}
+          name: ${{ steps.vars.outputs.version }}
+          body: |
+            - **Bot version:** ${{ steps.vars.outputs.version }}
+            - **DiscordJS version:** ${{ steps.discordjs.outputs.version }}
+          files: |
+            ${{ steps.vars.outputs.version }}_bot.zip
+            ${{ steps.vars.outputs.version }}_dbm.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
