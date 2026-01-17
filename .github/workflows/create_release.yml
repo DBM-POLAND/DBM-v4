@@ -37,7 +37,27 @@ jobs:
           zip -r bot.zip bot/
           zip -r dbm.zip dbm/ -x "dbm/resources/app/nodejs/node_modules/*"
 
-      # 4️⃣ Remove previous release with same DBM version
+      # 4️⃣ Reassign previous 'latest' tag to previous release's name
+      - name: Reassign previous 'latest' tag
+        run: |
+          LATEST_RELEASE_ID=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .id')
+          LATEST_RELEASE_NAME=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .name')
+
+          if [ -n "$LATEST_RELEASE_ID" ]; then
+            echo "Found previous release with tag 'latest' (ID: $LATEST_RELEASE_ID, name: $LATEST_RELEASE_NAME)"
+
+            # Create a git tag with the release name if it doesn't exist
+            git tag -f "$LATEST_RELEASE_NAME" || true
+            git push origin "$LATEST_RELEASE_NAME" --force || true
+
+            # Edit the previous release to use the new tag
+            gh release edit "$LATEST_RELEASE_ID" --tag "$LATEST_RELEASE_NAME"
+            echo "Previous release tag 'latest' reassigned to '$LATEST_RELEASE_NAME'"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      # 5️⃣ Remove previous release with same DBM version (optional, jeśli chcesz nadpisywać)
       - name: Remove previous release with same DBM version
         run: |
           PREV_RELEASE_TAG=$(gh release list --limit 100 --json tagName,name | jq -r ".[] | select(.name==\"${DBM_VERSION}\") | .tagName")
@@ -48,27 +68,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
-      - name: Reassign previous 'latest' tag
-        run: |
-          # Pobierz release z tagiem latest
-          LATEST_RELEASE_ID=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .id')
-          LATEST_RELEASE_NAME=$(gh release list --limit 10 --json tagName,id,name | jq -r '.[] | select(.tagName=="latest") | .name')
-
-          if [ -n "$LATEST_RELEASE_ID" ]; then
-            echo "Found previous release with tag 'latest' (ID: $LATEST_RELEASE_ID, name: $LATEST_RELEASE_NAME)"
-            
-            # Stwórz nowy tag o nazwie release (jeśli jeszcze nie istnieje)
-            git tag -f "$LATEST_RELEASE_NAME" || true
-            git push origin "$LATEST_RELEASE_NAME" --force || true
-
-            # Edytuj release, przypisz mu nowy tag
-            gh release edit "$LATEST_RELEASE_ID" --tag "$LATEST_RELEASE_NAME"
-            echo "Previous release tag 'latest' reassigned to '$LATEST_RELEASE_NAME'"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-
-      # 5️⃣ Create new release with tag latest and zip assets
+      # 6️⃣ Create new release with tag latest and zip assets
       - name: Create Release with assets
         run: |
           RELEASE_NAME="${DBM_VERSION:-$BOT_VERSION}"
