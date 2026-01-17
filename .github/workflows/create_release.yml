@@ -1,70 +1,50 @@
 name: Create Release
-
 on:
   push:
     branches: ["main"]
     paths:
       - "bot/**"
-
 permissions:
   contents: write
-
 jobs:
   create_release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Get versions
         run: |
           BOT_VERSION=$(jq -r '.version' bot/package.json)
           DISCORDJS_RAW=$(jq -r '.dependencies["discord.js"]' bot/package.json)
-
-          # usuń ^ ~ >= <= itd.
           DISCORDJS_VERSION=$(echo "$DISCORDJS_RAW" | sed 's/[^0-9.]*//g')
-
           echo "BOT_VERSION=$BOT_VERSION" >> $GITHUB_ENV
           echo "DISCORDJS_VERSION=$DISCORDJS_VERSION" >> $GITHUB_ENV
           echo "DBM_VERSION=$BOT_VERSION" >> $GITHUB_ENV
-
       - name: Create zip files
         run: |
           zip -r bot.zip bot/ -x "bot/node_modules/*"
           zip -r dbm.zip dbm/ -x "dbm/resources/app/nodejs/node_modules/*"
-
-      # 🔍 znajdź release po NAME i pobierz jego TAG
       - name: Find existing release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           EXISTING_TAG=$(gh release list --json name,tagName \
             | jq -r ".[] | select(.name==\"$DBM_VERSION\") | .tagName")
-
           echo "EXISTING_TAG=$EXISTING_TAG" >> $GITHUB_ENV
-
-      # 🔁 JEŚLI ISTNIEJE → AKTUALIZUJ
       - name: Update existing release
         if: env.EXISTING_TAG != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           RELEASE_NOTES=$(printf "**Bot version:** %s\n**DiscordJS version:** %s" "$BOT_VERSION" "$DISCORDJS_VERSION")
-
           echo "Updating release '$DBM_VERSION' (tag: $EXISTING_TAG)"
-
           gh release view "$EXISTING_TAG" --json assets \
             | jq -r '.assets[].name' \
             | xargs -I {} gh release delete-asset "$EXISTING_TAG" {} -y
-
           gh release edit "$EXISTING_TAG" \
             --title "$DBM_VERSION" \
             --notes "$RELEASE_NOTES"
-
           gh release upload "$EXISTING_TAG" bot.zip dbm.zip --clobber
-
-      # 🔄 JEŚLI NIE ISTNIEJE → ODBIERZ latest POPRZEDNIEMU
       - name: Reassign previous latest
         if: env.EXISTING_TAG == ''
         env:
@@ -72,22 +52,17 @@ jobs:
         run: |
           PREV_TAG=$(gh release list --json tagName,name \
             | jq -r '.[] | select(.tagName=="latest") | .tagName')
-
           PREV_NAME=$(gh release list --json tagName,name \
             | jq -r '.[] | select(.tagName=="latest") | .name')
-
           if [ -n "$PREV_TAG" ] && [ -n "$PREV_NAME" ]; then
             gh release edit "$PREV_TAG" --tag "$PREV_NAME"
           fi
-
-      # 🆕 NOWY RELEASE
       - name: Create new release
         if: env.EXISTING_TAG == ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           RELEASE_NOTES=$(printf "**Bot version:** %s\n**DiscordJS version:** %s" "$BOT_VERSION" "$DISCORDJS_VERSION")
-
           gh release create latest \
             --title "$DBM_VERSION" \
             --notes "$RELEASE_NOTES" \
