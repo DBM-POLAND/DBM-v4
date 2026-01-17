@@ -10,15 +10,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Get versions
         id: get_versions
         run: |
-          BOT_VERSION=$(jq -r .version bot/package.json)
+          # Pobieramy wersję bota
+          BOT_VERSION=$(jq -r '.version' bot/package.json)
+
+          # Pobieramy wersję discord.js
           DISCORDJS_VERSION=$(jq -r '.dependencies["discord.js"]' bot/package.json)
-          DBM_VERSION=$(jq -r .version bot/package.json // empty)
+
+          # Nie ma dbmVersion, więc używamy wersji bota jako fallback
+          DBM_VERSION=$BOT_VERSION
+
+          # Eksport do środowiska GitHub Actions
           echo "BOT_VERSION=$BOT_VERSION" >> $GITHUB_ENV
           echo "DISCORDJS_VERSION=$DISCORDJS_VERSION" >> $GITHUB_ENV
           echo "DBM_VERSION=$DBM_VERSION" >> $GITHUB_ENV
+
       - name: Create zip files
         run: |
           zip -r bot.zip bot/
