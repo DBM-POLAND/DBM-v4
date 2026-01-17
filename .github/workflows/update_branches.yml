@@ -1,15 +1,15 @@
-name: Update Branch
-
+name: Update Branches
 on:
   push:
     branches: ["main"]
     paths:
       - "bot/**"
       - "dbm/**"
-
+      - "docs/img/**"
+      - "LICENSE"
+      - "README.md"
 permissions:
   contents: write
-
 jobs:
   update_branch:
     runs-on: ubuntu-latest
@@ -18,18 +18,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Get DBM version
         run: |
           FULL_VERSION=$(jq -r '.version' bot/package.json)
           BRANCH_NAME="v$(echo $FULL_VERSION | awk -F. '{print $1"."$2}')"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Create or switch to version branch
         run: |
           if git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
@@ -38,11 +35,9 @@ jobs:
             git checkout --orphan $BRANCH_NAME
             git rm -rf . || true
           fi
-
       - name: Copy only dbm, docs/img, bot, LICENSE and README.md
         run: |
           git checkout main -- dbm bot docs/img LICENSE README.md || true
-
       - name: Commit and push
         run: |
           git add dbm bot docs/img LICENSE README.md
