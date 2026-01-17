@@ -1,7 +1,7 @@
 {
   "name": "bot-v14",
-  "description": "..",
-  "version": "4.1.0",
+  "description": "...",
+  "version": "4.0.0",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
@@ -10,6 +10,6 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
-    "discord.js": "^14.25.2"
+    "discord.js": "^14.25.1"
   }
 }
