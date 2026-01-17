@@ -9,5 +9,7 @@
   "author": "Shadow",
   "license": "MIT",
   "type": "commonjs",
-  "dependencies": {}
+  "dependencies": {
+    "discord.js": "^14.25.1"
+  }
 }
