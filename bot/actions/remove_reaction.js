@@ -28,7 +28,7 @@ module.exports = {
 
   meta: {
     version: "4.0.0",
-    modVersion: "1.0.0",
+    modVersion: "1.0.1",
     preciseCheck: true,
     author: "Shadow",
     help: "https://dc.dbm-poland.site",
@@ -141,9 +141,16 @@ module.exports = {
     if (type === 4) {
       emoji = this.evalMessage(data.varName2, cache);
     } else if (type === 0) {
-      emoji = this.getDBM().Bot.bot.emojis.cache.find(
-        (e) => e.name === this.evalMessage(data.varName2, cache),
-      );
+      const input = this.evalMessage(data.varName2, cache);
+      if (/^<a?:\w+:\d+>$/.test(input)) {
+        emoji = input;
+      } else if (/^\d+$/.test(input)) {
+        emoji = input;
+      } else {
+        emoji = this.getDBM().Bot.bot.emojis.cache.find(
+          (e) => e.name === input,
+        );
+      }
     } else {
       emoji = this.getVariable(
         type,
