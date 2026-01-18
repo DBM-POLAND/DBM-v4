@@ -22,16 +22,16 @@
 
   const url = {
     folder: {
-      actions: "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions",
-      events: "https://github.com/shadoow051/DBM-v14/blob/main/bot/events",
+      actions: "https://github.com/shadoow051/DBM-v14/tree/main/bot/actions",
+      events: "https://github.com/shadoow051/DBM-v14/tree/main/bot/events",
       extensions:
-        "https://github.com/shadoow051/DBM-v14/blob/main/bot/extensions",
-      html: "https://github.com/shadoow051/DBM-v14/blob/main/dbm/resources/app/html",
-      themes: "https://github.com/shadoow051/DBM-v14/blob/main/dbm/themes",
+        "https://github.com/shadoow051/DBM-v14/tree/main/bot/extensions",
+      html: "https://github.com/shadoow051/DBM-v14/tree/main/dbm/resources/app/html",
+      themes: "https://github.com/shadoow051/DBM-v14/tree/main/dbm/themes",
       translations:
-        "https://github.com/shadoow051/DBM-v14/blob/main/dbm/translations",
+        "https://github.com/shadoow051/DBM-v14/tree/main/dbm/translations",
       nodejs:
-        "https://github.com/shadoow051/DBM-v14/blob/main/dbm/resources/app/nodejs",
+        "https://github.com/shadoow051/DBM-v14/tree/main/dbm/resources/app/nodejs",
     },
     file: {
       bot: "https://github.com/shadoow051/DBM-v14/blob/main/bot/bot.js",
@@ -40,9 +40,9 @@
         "https://github.com/shadoow051/DBM-v14/blob/main/dbm/config/Permissions.json",
     },
     footer: {
-      github: "https://github.com/shadoow051",
-      discord: "",
-      youtube: "https://www.youtube.com/@shadoow.051",
+      github: "https://gh.dbm-poland.site",
+      discord: "https://dc.dbm-poland.site",
+      youtube: "https://yt.dbm-poland.site",
     },
   };
 
@@ -99,7 +99,7 @@
       throw new Error("Unknow Link URL!");
     }
     const match = url.match(
-      /github\.com\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)\/(.+)/
+      /github\.com\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)\/(.+)/,
     );
     if (!match) throw new Error("Unknow Link URL!");
     const [, user, repo, branch, folderPath] = match;
@@ -122,7 +122,7 @@
       } else if (item.type === "dir") {
         await downloadFilesFromFolderUrl(
           `https://github.com/${user}/${repo}/tree/${branch}/${item.path}`,
-          localItemPath
+          localItemPath,
         );
       }
     }
@@ -200,171 +200,190 @@
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
   {
-    const button = document.getElementById("downloadUpdate");
-    button.addEventListener("click", async () => {
-      const updateType = parseInt(
-        document.getElementById("updateTypeToDownload").value,
-        10
-      );
-      if (updateType === 0) {
-        // [BOT] (Full Update)
-        await downloadFilesFromFolderUrl(url.folder.actions, DBM.actLocs);
-        await downloadFilesFromFolderUrl(url.folder.events, DBM.evtLocs);
-        await downloadFilesFromFolderUrl(url.folder.extensions, DBM.extLocs);
-        downloadFileFromUrl(url.file.bot, path.join(DBM.extLocs, "bot.js"));
-        downloadFileFromUrl(url.file.shard, path.join(DBM.extLocs, "shard.js"));
-        // alert(`Successfully updated "BOT (Full Update)"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT (Full Update)"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 1) {
-        // [BOT] Actions
-        await downloadFilesFromFolderUrl(url.folder.actions, DBM.actLocs);
-        // alert(`Successfully updated "BOT Actions"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT Actions"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 2) {
-        // [BOT] Events
-        await downloadFilesFromFolderUrl(url.folder.events, DBM.evtLocs);
-        // alert(`Successfully updated "BOT Events"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT Events"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 3) {
-        // [BOT] Extensions
-        await downloadFilesFromFolderUrl(url.folder.extensions, DBM.extLocs);
-        // alert(`Successfully updated "BOT Extensions"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT Extensions"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 4) {
-        // [BOT] File (bot.js)
-        downloadFileFromUrl(
-          url.file.bot,
-          path.join(DBM._currentProject, "bot.js")
+    document.addEventListener("DOMContentLoaded", () => {
+      const button = document.getElementById("downloadUpdate");
+      button.addEventListener("click", async () => {
+        const originalButtonHTML = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '<i class="spinner loading icon"></i>Downloading...';
+
+        const updateType = parseInt(
+          document.getElementById("updateTypeToDownload").value,
+          10,
         );
-        // alert(`Successfully updated "BOT File (bot.js)"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT File (bot.js)"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 5) {
-        // [BOT] File (shard.js)
-        downloadFileFromUrl(
-          url.file.shard,
-          path.join(DBM._currentProject, "shard.js")
-        );
-        // alert(`Successfully updated "BOT File (shard.js)"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "BOT File (shard.js)"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 6) {
-        // [DBM] (Full Update)
-        await downloadFilesFromFolderUrl(
-          url.folder.html,
-          path.join(DBM.mainLoc, "resources", "app", "html")
-        );
-        downloadFileFromUrl(
-          url.file.permissions,
-          path.join(DBM.mainLoc, "config", "Permissions.json")
-        );
-        await downloadFilesFromFolderUrl(
-          url.folder.themes,
-          path.join(DBM.mainLoc, "themes")
-        );
-        await downloadFilesFromFolderUrl(
-          url.folder.translations,
-          path.join(DBM.mainLoc, "translations")
-        );
-        await downloadFilesFromFolderUrl(url.folder.nodejs, DBM.nodeLoc);
-        // alert(`Successfully updated "DBM (Full Update)"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM (Full Update)"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 7) {
-        // [DBM] Html
-        await downloadFilesFromFolderUrl(
-          url.folder.html,
-          path.join(DBM.mainLoc, "resources", "app", "html")
-        );
-        // alert(`Successfully updated "DBM Html"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM Html"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 8) {
-        // [DBM] Permissions
-        downloadFileFromUrl(
-          url.file.permissions,
-          path.join(DBM.mainLoc, "config", "Permissions.json")
-        );
-        // alert(`Successfully updated "DBM Permissions"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM Permissions"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 9) {
-        // [DBM] Themes
-        await downloadFilesFromFolderUrl(
-          url.folder.themes,
-          path.join(DBM.mainLoc, "themes")
-        );
-        // alert(`Successfully updated "DBM Themes"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM Themes"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 10) {
-        // [DBM] Translations
-        await downloadFilesFromFolderUrl(
-          url.folder.translations,
-          path.join(DBM.mainLoc, "translations")
-        );
-        // alert(`Successfully updated "DBM Translations"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM Translations"!`,
-          buttons: ["OK"],
-        });
-      } else if (updateType === 11) {
-        // [DBM] NodeJS
-        await downloadFilesFromFolderUrl(url.folder.nodejs, DBM.nodeLoc);
-        // alert(`Successfully updated "DBM NodeJS"!`);
-        dialog.showMessageBox({
-          type: "info",
-          title: "Discord Bot Maker - Backup",
-          message: `Successfully updated "DBM NodeJS"!`,
-          buttons: ["OK"],
-        });
-      }
+        if (button) {
+          if (updateType === 0) {
+            // [BOT] (Full Update)
+            await downloadFilesFromFolderUrl(url.folder.actions, DBM.actLocs);
+            await downloadFilesFromFolderUrl(url.folder.events, DBM.evtLocs);
+            await downloadFilesFromFolderUrl(
+              url.folder.extensions,
+              DBM.extLocs,
+            );
+            downloadFileFromUrl(url.file.bot, path.join(DBM.extLocs, "bot.js"));
+            downloadFileFromUrl(
+              url.file.shard,
+              path.join(DBM.extLocs, "shard.js"),
+            );
+            // alert(`Successfully updated "BOT (Full Update)"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT (Full Update)"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 1) {
+            // [BOT] Actions
+            await downloadFilesFromFolderUrl(url.folder.actions, DBM.actLocs);
+            // alert(`Successfully updated "BOT Actions"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT Actions"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 2) {
+            // [BOT] Events
+            await downloadFilesFromFolderUrl(url.folder.events, DBM.evtLocs);
+            // alert(`Successfully updated "BOT Events"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT Events"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 3) {
+            // [BOT] Extensions
+            await downloadFilesFromFolderUrl(
+              url.folder.extensions,
+              DBM.extLocs,
+            );
+            // alert(`Successfully updated "BOT Extensions"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT Extensions"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 4) {
+            // [BOT] File (bot.js)
+            downloadFileFromUrl(
+              url.file.bot,
+              path.join(DBM._currentProject, "bot.js"),
+            );
+            // alert(`Successfully updated "BOT File (bot.js)"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT File (bot.js)"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 5) {
+            // [BOT] File (shard.js)
+            downloadFileFromUrl(
+              url.file.shard,
+              path.join(DBM._currentProject, "shard.js"),
+            );
+            // alert(`Successfully updated "BOT File (shard.js)"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "BOT File (shard.js)"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 6) {
+            // [DBM] (Full Update)
+            await downloadFilesFromFolderUrl(
+              url.folder.html,
+              path.join(DBM.mainLoc, "resources", "app", "html"),
+            );
+            downloadFileFromUrl(
+              url.file.permissions,
+              path.join(DBM.mainLoc, "config", "Permissions.json"),
+            );
+            await downloadFilesFromFolderUrl(
+              url.folder.themes,
+              path.join(DBM.mainLoc, "themes"),
+            );
+            await downloadFilesFromFolderUrl(
+              url.folder.translations,
+              path.join(DBM.mainLoc, "translations"),
+            );
+            await downloadFilesFromFolderUrl(url.folder.nodejs, DBM.nodeLoc);
+            // alert(`Successfully updated "DBM (Full Update)"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM (Full Update)"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 7) {
+            // [DBM] Html
+            await downloadFilesFromFolderUrl(
+              url.folder.html,
+              path.join(DBM.mainLoc, "resources", "app", "html"),
+            );
+            // alert(`Successfully updated "DBM Html"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM Html"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 8) {
+            // [DBM] Permissions
+            downloadFileFromUrl(
+              url.file.permissions,
+              path.join(DBM.mainLoc, "config", "Permissions.json"),
+            );
+            // alert(`Successfully updated "DBM Permissions"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM Permissions"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 9) {
+            // [DBM] Themes
+            await downloadFilesFromFolderUrl(
+              url.folder.themes,
+              path.join(DBM.mainLoc, "themes"),
+            );
+            // alert(`Successfully updated "DBM Themes"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM Themes"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 10) {
+            // [DBM] Translations
+            await downloadFilesFromFolderUrl(
+              url.folder.translations,
+              path.join(DBM.mainLoc, "translations"),
+            );
+            // alert(`Successfully updated "DBM Translations"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM Translations"!`,
+              buttons: ["OK"],
+            });
+          } else if (updateType === 11) {
+            // [DBM] NodeJS
+            await downloadFilesFromFolderUrl(url.folder.nodejs, DBM.nodeLoc);
+            // alert(`Successfully updated "DBM NodeJS"!`);
+            dialog.showMessageBox({
+              type: "info",
+              title: "Discord Bot Maker - Backup",
+              message: `Successfully updated "DBM NodeJS"!`,
+              buttons: ["OK"],
+            });
+          }
+        }
+        button.disabled = false;
+        button.innerHTML = originalButtonHTML;
+      });
     });
   }
 
@@ -391,9 +410,9 @@
             const now = new Date();
             const pad = (n) => n.toString().padStart(2, "0");
             const timestamp = `${pad(now.getHours())}_${pad(
-              now.getMinutes()
+              now.getMinutes(),
             )}_${pad(now.getSeconds())}-${pad(now.getDate())}-${pad(
-              now.getMonth() + 1
+              now.getMonth() + 1,
             )}-${now.getFullYear()}`;
             const backupRoot = path.join(projectPath, "backups", timestamp);
             const backupDataPath = path.join(backupRoot, "data");
@@ -437,7 +456,7 @@
             const backups = fs
               .readdirSync(backupsPath)
               .filter((name) =>
-                fs.existsSync(path.join(backupsPath, name, "data"))
+                fs.existsSync(path.join(backupsPath, name, "data")),
               );
             if (!backups.length) {
               // alert("No backups found!");
@@ -488,7 +507,7 @@
                 const backups = fs
                   .readdirSync(backupsPath)
                   .filter((name) =>
-                    fs.existsSync(path.join(backupsPath, name, "data"))
+                    fs.existsSync(path.join(backupsPath, name, "data")),
                   );
                 if (!backups.length) {
                   // alert("No backups found!");
@@ -533,7 +552,7 @@
                         buttons: ["OK"],
                       });
                       const optionToRemove = select.querySelector(
-                        `option[value="${selected}"]`
+                        `option[value="${selected}"]`,
                       );
                       if (optionToRemove) optionToRemove.remove();
                       $("#deleteBackupSelect").dropdown("refresh");
