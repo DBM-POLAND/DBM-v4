@@ -28,7 +28,7 @@ module.exports = {
 
   meta: {
     version: "4.0.0",
-    modVersion: "1.0.0",
+    modVersion: "1.0.1",
     preciseCheck: true,
     author: "Shadow",
     help: "https://dc.dbm-poland.site",
@@ -47,15 +47,13 @@ module.exports = {
   //region # Action HTML
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
-  html(isEvent, data) {
+  html() {
     const mod = `<dbm-mod><info style="opacity: 0.2; transition: opacity 0.3s; font-weight: 900; font-size: 16px; padding: 5px; border-radius: 5px; background: rgba(0, 0, 0, 0.49); border:1px solid rgba(132, 132, 132, 1); position: fixed; bottom: 0; left: 0; z-index: 999999;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.2'">Author: <a href="#" style="color:#07f;text-decoration:none;" onclick="require('electron').shell.openExternal('${this.meta.authorUrl}')">${this.meta.author}</a><br>Help: <a href="#" style="color:#07f;text-decoration:none;" onclick="require('electron').shell.openExternal('${this.meta.help}')">click here</a></info><version style="opacity: 0.2; transition: opacity 0.3s; font-weight: 900; font-size: 16px; padding: 5px; border-radius: 5px; background: rgba(0, 0, 0, 0.49); border:1px solid rgba(132, 132, 132, 1); position: fixed; bottom: 0; right: 0; z-index: 999999;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.2'"><a href="#" style="color:#07f;text-decoration:none;" onclick="require('electron').shell.openExternal('${this.meta.downloadUrl}')">${this.meta.modVersion}</a></version></dbm-mod>`;
     return (
       mod +
       `
 <message-input dropdownLabel="Source Message" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></message-input>
-
 <br><br><br>
-
 <div style="padding-top: 8px;">
 	<div style="float: left; width: 35%;">
 		<span class="dbminputlabel">Source Emoji</span><br>
@@ -75,7 +73,8 @@ module.exports = {
 		<span class="dbminputlabel">Variable Name</span><br>
 		<input id="varName3" class="round" type="text" list="variableList2">
 	</div>
-</div>`
+</div>
+`
     );
   },
 
@@ -129,9 +128,16 @@ module.exports = {
     if (type === 4) {
       emoji = this.evalMessage(data.varName2, cache);
     } else if (type === 0) {
-      emoji = this.getDBM().Bot.bot.emojis.cache.find(
-        (e) => e.name === this.evalMessage(data.varName2, cache),
-      );
+      const input = this.evalMessage(data.varName2, cache);
+      if (/^<a?:\w+:\d+>$/.test(input)) {
+        emoji = input;
+      } else if (/^\d+$/.test(input)) {
+        emoji = input;
+      } else {
+        emoji = this.getDBM().Bot.bot.emojis.cache.find(
+          (e) => e.name === input,
+        );
+      }
     } else {
       emoji = this.getVariable(
         type,
