@@ -70,8 +70,6 @@ module.exports = {
 
   async action(cache) {
     const data = cache.actions[cache.index];
-    const interaction =
-      cache.interaction?.__originalInteraction ?? cache.interaction;
     const channel = await this.getChannelFromData(
       data.channel,
       data.varName,
@@ -79,8 +77,8 @@ module.exports = {
     );
     let result;
     let sourceChannelId;
-    if (interaction.channel) {
-      sourceChannelId = interaction.channel.id;
+    if (cache.interaction) {
+      sourceChannelId = cache.interaction.channel.id;
     } else if (cache.msg) {
       sourceChannelId = cache.msg.channelId;
     } else {
