@@ -38,7 +38,7 @@ module.exports = {
 
   meta: {
     version: "4.0.0",
-    modVersion: "1.0.0",
+    modVersion: "1.0.1",
     preciseCheck: true,
     author: "Shadow",
     help: "https://dc.dbm-poland.site",
@@ -62,7 +62,6 @@ module.exports = {
 
   fields: [
     "dataFile",
-    "databaseType",
     "channel",
     "varName",
     "message",
@@ -168,72 +167,73 @@ module.exports = {
 
   async action(cache) {
     const data = cache.actions[cache.index];
+    const { Bot } = this.getDBM();
+    Bot.require("better-sqlite3");
     const { db } = this.getDBM().Files;
-    const { Bot, Files } = this.getDBM();
-    Files.db.DataBase = Bot.require("better-sqlite3");
+    const dataFile = parseInt(data.dataFile, 10);
     const dataName = this.evalMessage(data.dataName, cache);
-    const defaultVal = this.evalIfPossible(data.defaultVal, cache);
+    let defaultValue = this.evalIfPossible(data.defaultVal, cache);
     let result;
-    if (data.dataFile === "0") {
+    if (dataFile === 0) {
       // channels
       const channel = await this.getChannelFromData(
         data.channel,
         data.varName,
         cache,
       );
-      result =
-        db.readData(db.DataBase.channels, channel.id, dataName) ||
-        defaultVal ||
-        {};
-      if (data.debugMode)
-        console.log(db.readData(db.DataBase.channels, channel.id) || {});
-    } else if (data.dataFile === "1") {
+      result = db.DataBase.channels.getData(
+        channel.id,
+        dataName,
+        defaultValue,
+        data.debugMode,
+      );
+    } else if (dataFile === 1) {
       // globals
-      result =
-        db.readData(db.DataBase.globals, "global", dataName) ||
-        defaultVal ||
-        {};
-      if (data.debugMode)
-        console.log(db.readData(db.DataBase.globals, "global") || {});
-    } else if (data.dataFile === "2") {
+      result = db.DataBase.globals.getData(
+        "globals",
+        dataName,
+        defaultValue,
+        data.debugMode,
+      );
+    } else if (dataFile === 2) {
       // messages
       const message = await this.getMessageFromData(
         data.message,
         data.varName2,
         cache,
       );
-      result =
-        db.readData(db.DataBase.messages, message.id, dataName) ||
-        defaultVal ||
-        {};
-      if (data.debugMode)
-        console.log(db.readData(db.DataBase.messages, message.id) || {});
-    } else if (data.dataFile === "3") {
+      result = db.DataBase.messages.getData(
+        message.id,
+        dataName,
+        defaultValue,
+        data.debugMode,
+      );
+    } else if (dataFile === 3) {
       // players
       const member = await this.getMemberFromData(
         data.member,
         data.varName3,
         cache,
       );
-      result =
-        db.readData(db.DataBase.players, member.id, dataName) ||
-        defaultVal ||
-        {};
-      if (data.debugMode)
-        console.log(db.readData(db.DataBase.players, member.id) || {});
-    } else if (data.dataFile === "4") {
+      result = db.DataBase.players.getData(
+        member.id,
+        dataName,
+        defaultValue,
+        data.debugMode,
+      );
+    } else if (dataFile === 4) {
       // servers
       const server = await this.getServerFromData(
         data.server,
         data.varName4,
         cache,
       );
-      result =
-        db.readData(db.DataBase.servers, server.id, dataName) ||
-        defaultVal ||
-        {};
-      if (data.debugMode)
-        console.log(db.readData(db.DataBase.servers, server.id) || {});
+      result = db.DataBase.servers.getData(
+        server.id,
+        dataName,
+        defaultValue,
+        data.debugMode,
+      );
     }
     this.storeValue(
       result,

@@ -27,10 +27,11 @@ module.exports = {
     else if (data.dataFile === "4")
       target = presets.getMessageText(data.server, data.varName4);
     let type;
-    if (data.changeType === "set") type = "=";
-    else if (data.changeType === "add") type = "+";
-    else if (data.changeType === "substract") type = "-";
+    if (data.changeType === "setData") type = "=";
+    else if (data.changeType === "addData") type = "+";
+    else if (data.changeType === "substractData") type = "-";
     else type = "-=";
+    if (data.changeType === "clearData") data.value = "";
     return `${target} (${data.dataName}) ${type} ${data.value}`;
   },
 
@@ -40,7 +41,7 @@ module.exports = {
 
   meta: {
     version: "4.0.0",
-    modVersion: "1.0.0",
+    modVersion: "1.0.1",
     preciseCheck: true,
     author: "Shadow",
     help: "https://dc.dbm-poland.site",
@@ -115,10 +116,10 @@ module.exports = {
 	<div style="float: right; width: calc(50% - 12px);">
 		<span class="dbminputlabel">Control Type</span>
 		<select id="changeType" class="round">
-			<option value="set" selected>Set Value</option>
-			<option value="add">Add Value</option>
-      <option value="substract">Subtract Value</option>
-      <option value="clear">Clear Value</option>
+			<option value="setData" selected>Set Value</option>
+			<option value="addData">Add Value</option>
+      <option value="substractData">Subtract Value</option>
+      <option value="clearData">Clear Value</option>
 		</select>
 	</div>
 </div>
@@ -160,7 +161,7 @@ module.exports = {
     dataFile.addEventListener("change", updateWrappers);
     updateWrappers();
     function updateValueWrapper() {
-      if (changeType.value === "clear") {
+      if (changeType.value === "clearData") {
         valueWrapper.style.display = "none";
       } else {
         valueWrapper.style.display = "block";
@@ -176,60 +177,51 @@ module.exports = {
 
   async action(cache) {
     const data = cache.actions[cache.index];
+    const { Bot } = this.getDBM();
+    Bot.require("better-sqlite3");
     const { db } = this.getDBM().Files;
-    const { Bot, Files } = this.getDBM();
-    Files.db.DataBase = Bot.require("better-sqlite3");
     const dataName = this.evalMessage(data.dataName, cache);
-    const value = this.evalIfPossible(data.value, cache);
+    let value = this.evalIfPossible(data.value, cache);
+    const dataFile = parseInt(data.dataFile, 10);
     const changeType = data.changeType;
-    if (data.dataFile === "0") {
+    if (changeType === "clearData") value = undefined;
+    if (dataFile === 0) {
       // channels
       const channel = await this.getChannelFromData(
         data.channel,
         data.varName,
         cache,
       );
-      db.saveData(
-        db.DataBase.channels,
-        channel.id,
-        dataName,
-        value,
-        changeType,
-      );
-    } else if (data.dataFile === "1") {
+      db.DataBase.channels[changeType](channel.id, dataName, value);
+    } else if (dataFile === 1) {
       // globals
-      db.saveData(db.DataBase.globals, "global", dataName, value, changeType);
-    } else if (data.dataFile === "2") {
+      db.DataBase.globals[changeType]("globals", dataName, value);
+    } else if (dataFile === 2) {
       // messages
       const message = await this.getMessageFromData(
         data.message,
         data.varName2,
         cache,
       );
-      db.saveData(
-        db.DataBase.messages,
-        message.id,
-        dataName,
-        value,
-        changeType,
-      );
-    } else if (data.dataFile === "3") {
+      db.DataBase.messages[changeType](message.id, dataName, value);
+    } else if (dataFile === 3) {
       // players
       const member = await this.getMemberFromData(
         data.member,
         data.varName3,
         cache,
       );
-      db.saveData(db.DataBase.players, member.id, dataName, value, changeType);
-    } else if (data.dataFile === "4") {
+      db.DataBase.players[changeType](member.id, dataName, value);
+    } else if (dataFile === 4) {
       // servers
       const server = await this.getServerFromData(
         data.server,
         data.varName4,
         cache,
       );
-      db.saveData(db.DataBase.servers, server.id, dataName, value, changeType);
+      db.DataBase.servers[changeType](server.id, dataName, value);
     }
+
     this.callNextAction(cache);
   },
 
