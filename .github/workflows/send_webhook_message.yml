@@ -13,4 +13,23 @@ jobs:
         uses: Ilshidur/action-discord@v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "Push na branch main! 🎉"
+          message: |
+            {
+              "embeds": [
+                {
+                  "title": "[DBM-v14] new commit",
+                  "description": "${{ github.event.head_commit.message }}",
+                  "url": "${{ github.event.head_commit.url }}"
+                  "color": 65297,
+                  "timestamp": "${{ github.event.head_commit.timestamp }}",
+                  "thumbnail": {
+                    "url": "https://github.com/shadoow051/DBM-v14/blob/main/docs/img/dbm-poland.png?raw=true"
+                  },
+                  "author": {
+                    "name": "${{ github.actor }}",
+                    "url": "https://github.com/${{ github.actor }}",
+                    "icon_url": "https://avatars.githubusercontent.com/${{ github.actor }}"
+                  }
+                }
+              ]
+            }
