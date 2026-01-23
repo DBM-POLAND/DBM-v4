@@ -1,0 +1,16 @@
+name: Send Webhook Message
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "bot/**"
+      - "dbm/**"
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Message
+        uses: Ilshidur/action-discord@v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "Push na branch main! 🎉"

@@ -4843,8 +4843,6 @@ Images.drawImageOnImage = function (img1, img2, x, y) {
 // Contains functions for giveaways management.
 //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
-console.log(Files.db);
-
 const Giveaways = (DBM.Giveaways = {});
 
 Giveaways.DiscordGiveaways = null;
