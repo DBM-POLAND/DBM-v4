@@ -46,7 +46,7 @@ if (
   console.log(
     `This version of Discord Bot Maker requires discord.js ${requiredDjsVersion}+.
 It is currently ${DiscordJS.version}.
-Please use "Project > Module Manager" and update to discord.js ${requiredDjsVersion}.\n\n`
+Please use "Project > Module Manager" and update to discord.js ${requiredDjsVersion}.\n\n`,
   );
   throw new Error(`Need discord.js ${requiredDjsVersion} to run!!!`);
 }
@@ -119,31 +119,31 @@ function PrintError(type, ...args) {
     }
     case MsgType.MISSING_ACTIONS: {
       console.error(
-        `[Missing Actions]\nPlease copy the "Actions" folder from the Discord Bot Maker directory to this bot\'s directory: \n${args[0]}`
+        `[Missing Actions]\nPlease copy the "Actions" folder from the Discord Bot Maker directory to this bot\'s directory: \n${args[0]}`,
       );
       break;
     }
     case MsgType.DUPLICATE_SLASH_COMMAND: {
       console.warn(
-        `[Duplicate Slash Command]\nSlash command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`
+        `[Duplicate Slash Command]\nSlash command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.TOO_MANY_SPACES_SLASH_NAME: {
       console.warn(
-        `[Too Many Spaces in Slash Name]\nSlash command with name "${args[0]}" has too many spaces!\nSlash command names may only contain a maximum of three different words.\n`
+        `[Too Many Spaces in Slash Name]\nSlash command with name "${args[0]}" has too many spaces!\nSlash command names may only contain a maximum of three different words.\n`,
       );
       break;
     }
     case MsgType.SUB_COMMAND_ALREADY_EXISTS: {
       console.warn(
-        `[Sub-Command Already Exists]\nSlash command with name "${args[0]}" cannot exist.\nIt requires the creation of a "sub-command group" called "${args[1]}",\nbut there\'s already a command with that name.`
+        `[Sub-Command Already Exists]\nSlash command with name "${args[0]}" cannot exist.\nIt requires the creation of a "sub-command group" called "${args[1]}",\nbut there\'s already a command with that name.`,
       );
       break;
     }
     case MsgType.SUB_COMMAND_GROUP_ALREADY_EXISTS: {
       console.warn(
-        `[Sub-Command Group Already Exists]\nSlash command with name "${args[0]}" cannot exist.\nThere is already a "sub-command group" with that name.\nThe "sub-command group" exists because of a command named something like: "${args[0]} _____"`
+        `[Sub-Command Group Already Exists]\nSlash command with name "${args[0]}" cannot exist.\nThere is already a "sub-command group" with that name.\nThe "sub-command group" exists because of a command named something like: "${args[0]} _____"`,
       );
       break;
     }
@@ -153,73 +153,73 @@ function PrintError(type, ...args) {
     }
     case MsgType.INVALID_SLASH_NAME: {
       console.error(
-        `[Invalid Slash Command Name]\nSlash command has invalid name: "${args[0]}".\nSlash command names cannot have spaces and must only contain letters, numbers, underscores, and dashes!\nThis command will be ignored.`
+        `[Invalid Slash Command Name]\nSlash command has invalid name: "${args[0]}".\nSlash command names cannot have spaces and must only contain letters, numbers, underscores, and dashes!\nThis command will be ignored.`,
       );
       break;
     }
     case MsgType.DUPLICATE_USER_COMMAND: {
       console.warn(
-        `[Duplicate User Command]\nUser command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`
+        `[Duplicate User Command]\nUser command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.DUPLICATE_MESSAGE_COMMAND: {
       console.warn(
-        `[Duplicate Message Command]\nMessage command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`
+        `[Duplicate Message Command]\nMessage command with name "${args[0]}" already exists!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.DUPLICATE_SLASH_PARAMETER: {
       console.warn(
-        `[Duplicate Slash Command]\nSlash command "${args[0]}" parameter #${args[1]} ("${args[2]}") has a name that\'s already being used!\nThis duplicate will be ignored.\n`
+        `[Duplicate Slash Command]\nSlash command "${args[0]}" parameter #${args[1]} ("${args[2]}") has a name that\'s already being used!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.INVALID_SLASH_PARAMETER_NAME: {
       console.error(
-        `[Invalid Slash Parameter Name]\nSlash command "${args[0]}" parameter #${args[1]} has invalid name: "${args[2]}".\nSlash command parameter names cannot have spaces and must only contain letters, numbers, underscores, and dashes!\nThis parameter will be ignored.\n`
+        `[Invalid Slash Parameter Name]\nSlash command "${args[0]}" parameter #${args[1]} has invalid name: "${args[2]}".\nSlash command parameter names cannot have spaces and must only contain letters, numbers, underscores, and dashes!\nThis parameter will be ignored.\n`,
       );
       break;
     }
     case MsgType.INVALID_SLASH_COMMAND_SERVER_ID: {
       console.error(
-        `Invalid Server ID "${args[0]}" listed in "Slash Command Options -> Server IDs for Slash Commands"!\n`
+        `Invalid Server ID "${args[0]}" listed in "Slash Command Options -> Server IDs for Slash Commands"!\n`,
       );
       break;
     }
     case MsgType.DUPLICATE_BUTTON_ID: {
       console.warn(
-        `Button interaction with unique id "${args[0]}" already exists!\nThis duplicate will be ignored.\n`
+        `Button interaction with unique id "${args[0]}" already exists!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.DUPLICATE_SELECT_ID: {
       console.warn(
-        `Select menu interaction with unique id "${args[0]}" already exists!\nThis duplicate will be ignored.\n`
+        `Select menu interaction with unique id "${args[0]}" already exists!\nThis duplicate will be ignored.\n`,
       );
       break;
     }
     case MsgType.MISSING_APPLICATION_COMMAND_ACCESS: {
       console.warn(
-        `Slash commands cannot be provided to server: ${args[0]} (ID: ${args[1]}).\nPlease re-invite the bot to this server using the invite link found in "Settings -> Bot Settings".\nAlternatively, you can switch to using Global Slash Commands in "Settings -> Slash Command Settings -> Slash Command Creation Preference". However, please note global commands take a long time to update (~1 hour).`
+        `Slash commands cannot be provided to server: ${args[0]} (ID: ${args[1]}).\nPlease re-invite the bot to this server using the invite link found in "Settings -> Bot Settings".\nAlternatively, you can switch to using Global Slash Commands in "Settings -> Slash Command Settings -> Slash Command Creation Preference". However, please note global commands take a long time to update (~1 hour).`,
       );
       break;
     }
     case MsgType.MISSING_MUSIC_MODULES: {
       console.warn(
-        `Could not load audio-related Node modules.\nPlease run "File -> Music Capabilities -> Update Music Libraries" to ensure they are installed.`
+        `Could not load audio-related Node modules.\nPlease run "File -> Music Capabilities -> Update Music Libraries" to ensure they are installed.`,
       );
       break;
     }
     case MsgType.MUTABLE_VOLUME_DISABLED: {
       console.warn(
-        `[Mutable Volume Disabled]\nTried setting volume but "Mutable Volume" is disabled.`
+        `[Mutable Volume Disabled]\nTried setting volume but "Mutable Volume" is disabled.`,
       );
       break;
     }
     case MsgType.MUTABLE_VOLUME_NOT_IN_CHANNEL: {
       console.warn(
-        "[Mutable Volume Not in Channel]\nTried setting volume but the bot is not in a voice channel."
+        "[Mutable Volume Not in Channel]\nTried setting volume but the bot is not in a voice channel.",
       );
       break;
     }
@@ -233,25 +233,25 @@ function PrintError(type, ...args) {
     }
     case MsgType.MISSING_MEMBER_INTENT_FIND_USER_ID: {
       console.warn(
-        ` - DBM Warning - \nFind User (by Name/ID) may freeze or error because\nthe bot has not enabled the Guild Members Intent.`
+        ` - DBM Warning - \nFind User (by Name/ID) may freeze or error because\nthe bot has not enabled the Guild Members Intent.`,
       );
       break;
     }
     case MsgType.CANNOT_FIND_USER_BY_ID: {
       console.warn(
-        `[Cannot Find User by ID]\nCannot find user by id: ${args[0]}`
+        `[Cannot Find User by ID]\nCannot find user by id: ${args[0]}`,
       );
       break;
     }
     case MsgType.SERVER_MESSAGE_INTENT_REQUIRED: {
       console.warn(
-        `[Message Content Intent Required]\n${args[0]} commands found that require the "Message Content" intent.\nThese commands require the bot to be able to read messages from Discord servers.\nTo enable this behavior, first ensure the "MESSAGE CONTENT INTENT" is enabled in the "Bot" section on the Discord Developer Portal (the same page you got your bot token from).\nSecondly, in Discord Bot Maker, select Extensions -> Bot Intents from the title menu bar, and in this dialog, make sure "Message Content" is checked.`
+        `[Message Content Intent Required]\n${args[0]} commands found that require the "Message Content" intent.\nThese commands require the bot to be able to read messages from Discord servers.\nTo enable this behavior, first ensure the "MESSAGE CONTENT INTENT" is enabled in the "Bot" section on the Discord Developer Portal (the same page you got your bot token from).\nSecondly, in Discord Bot Maker, select Extensions -> Bot Intents from the title menu bar, and in this dialog, make sure "Message Content" is checked.`,
       );
       break;
     }
     case MsgType.CHANNEL_PARTIAL_REQUIRED: {
       console.warn(
-        `[Channel Partial Required]\n${args[0]} commands are set to "DMs Only", but the Channel partial is not enabled.\nTo allow the bot to read messages from DMs, do the following: In Discord Bot Maker, on the title menu bar, go to Extensions -> Bot Partials.\nIn the dialog that appears, select "Custom" and then make sure "Channel (Enables DMs)" is checked.`
+        `[Channel Partial Required]\n${args[0]} commands are set to "DMs Only", but the Channel partial is not enabled.\nTo allow the bot to read messages from DMs, do the following: In Discord Bot Maker, on the title menu bar, go to Extensions -> Bot Partials.\nIn the dialog that appears, select "Custom" and then make sure "Channel (Enables DMs)" is checked.`,
       );
       break;
     }
@@ -420,14 +420,14 @@ Bot.onRawData = function (packet) {
         client.emit(
           "messageReactionAdd",
           reaction,
-          client.users.resolve(packet.d.user_id)
+          client.users.resolve(packet.d.user_id),
         );
       }
       if (packet.t === "MESSAGE_REACTION_REMOVE") {
         client.emit(
           "messageReactionRemove",
           reaction,
-          client.users.resolve(packet.d.user_id)
+          client.users.resolve(packet.d.user_id),
         );
       }
     })
@@ -505,12 +505,12 @@ Bot.reformatCommands = function () {
                 this.$slash[keyName] = com;
                 if (names.length === 1) {
                   this.applicationCommandData.push(
-                    this.createApiJsonFromCommand(com, keyName)
+                    this.createApiJsonFromCommand(com, keyName),
                   );
                 } else {
                   this.mergeSubCommandIntoCommandData(
                     names,
-                    this.createApiJsonFromCommand(com, names[names.length - 1])
+                    this.createApiJsonFromCommand(com, names[names.length - 1]),
                   );
                 }
               }
@@ -527,7 +527,7 @@ Bot.reformatCommands = function () {
           } else {
             this.$user[name] = com;
             this.applicationCommandData.push(
-              this.createApiJsonFromCommand(com, name)
+              this.createApiJsonFromCommand(com, name),
             );
           }
           break;
@@ -539,7 +539,7 @@ Bot.reformatCommands = function () {
           } else {
             this.$msge[name] = com;
             this.applicationCommandData.push(
-              this.createApiJsonFromCommand(com, name)
+              this.createApiJsonFromCommand(com, name),
             );
           }
           break;
@@ -574,11 +574,11 @@ Bot.createApiJsonFromCommand = function (com, name) {
   }
   if (com.comType === "4" && com.parameters && Array.isArray(com.parameters)) {
     const convertedParams = com.parameters.map(
-      this.convertGuiParameterToDiscord.bind(this)
+      this.convertGuiParameterToDiscord.bind(this),
     );
     result.options = this.validateSlashCommandParameters(
       convertedParams,
-      result.name
+      result.name,
     );
   }
   return result;
@@ -632,7 +632,7 @@ Bot.mergeSubCommandIntoCommandData = function (names, data) {
       baseCommand.options.find(
         (d) =>
           d.name === data.name &&
-          d.type === DiscordJS.ApplicationCommandOptionType.SubcommandGroup
+          d.type === DiscordJS.ApplicationCommandOptionType.SubcommandGroup,
       )
     ) {
       PrintError(MsgType.SUB_COMMAND_GROUP_ALREADY_EXISTS, names.join(" "));
@@ -661,7 +661,7 @@ Bot.mergeSubCommandIntoCommandData = function (names, data) {
       PrintError(
         MsgType.SUB_COMMAND_ALREADY_EXISTS,
         names.join(" "),
-        `${names[0]} ${names[1]}`
+        `${names[0]} ${names[1]}`,
       );
       return;
     }
@@ -727,7 +727,7 @@ Bot.validateSlashCommandParameters = function (parameters, commandName) {
         existingNames[name] = true;
         paramsData.name = name;
         paramsData.description = this.validateSlashCommandDescription(
-          paramsData.description
+          paramsData.description,
         );
         if (paramsData.required) {
           requireParams.push(paramsData);
@@ -742,7 +742,7 @@ Bot.validateSlashCommandParameters = function (parameters, commandName) {
         MsgType.INVALID_SLASH_PARAMETER_NAME,
         commandName,
         i + 1,
-        paramsData.name
+        paramsData.name,
       );
     }
   }
@@ -773,7 +773,7 @@ Bot.prepareActions = function (actions) {
           this,
           action,
           customData,
-          i
+          i,
         );
       }
     }
@@ -872,7 +872,7 @@ Bot.registerApplicationCommands = function () {
     case "manual": {
       this.setCertainServerCommands(
         this.applicationCommandData,
-        this._slashCommandServerList
+        this._slashCommandServerList,
       );
       this.setGlobalCommands([]);
       break;
@@ -880,7 +880,7 @@ Bot.registerApplicationCommands = function () {
     case "manualglobal": {
       this.setCertainServerCommands(
         this.applicationCommandData,
-        this._slashCommandServerList
+        this._slashCommandServerList,
       );
       this.setGlobalCommands(this.applicationCommandData);
       break;
@@ -939,7 +939,7 @@ Bot.setCommandsForServer = function (guild, commands, printMissingAccessError) {
             PrintError(
               MsgType.MISSING_APPLICATION_COMMAND_ACCESS,
               guild.name,
-              guild.id
+              guild.id,
             );
           }
         } else {
@@ -1038,7 +1038,7 @@ Bot.escapeRegExp = function (text) {
 
 Bot.generateTagRegex = function (tag, allowPrefixSpace) {
   return new RegExp(
-    `^${this.escapeRegExp(tag)}${allowPrefixSpace ? "\\s*" : ""}`
+    `^${this.escapeRegExp(tag)}${allowPrefixSpace ? "\\s*" : ""}`,
   );
 };
 
@@ -1166,7 +1166,7 @@ Bot.onSlashCommandInteraction = function (interaction) {
     Actions.preformActionsFromInteraction(
       interaction,
       this.$slash[interactionName],
-      true
+      true,
     );
   }
 };
@@ -1192,7 +1192,7 @@ Bot.onUserContextMenuInteraction = function (interaction) {
           Actions.preformActionsFromInteraction(
             interaction,
             this.$user[interactionName],
-            true
+            true,
           );
         })
         .catch(console.error);
@@ -1201,7 +1201,7 @@ Bot.onUserContextMenuInteraction = function (interaction) {
       Actions.preformActionsFromInteraction(
         interaction,
         this.$user[interactionName],
-        true
+        true,
       );
     }
   }
@@ -1219,7 +1219,7 @@ Bot.onMessageContextMenuInteraction = function (interaction) {
           Actions.preformActionsFromInteraction(
             interaction,
             this.$msge[interactionName],
-            true
+            true,
           );
         })
         .catch(console.error);
@@ -1228,7 +1228,7 @@ Bot.onMessageContextMenuInteraction = function (interaction) {
       Actions.preformActionsFromInteraction(
         interaction,
         this.$msge[interactionName],
-        true
+        true,
       );
     }
   }
@@ -1239,7 +1239,7 @@ Bot.onButtonInteraction = function (interaction) {
   if (this.$button[interactionId]) {
     Actions.preformActionsFromInteraction(
       interaction,
-      this.$button[interactionId]
+      this.$button[interactionId],
     );
   } else {
     const response = Actions.getInvalidButtonResponseText();
@@ -1255,7 +1255,7 @@ Bot.onSelectMenuInteraction = function (interaction) {
   if (this.$select[interactionId]) {
     Actions.preformActionsFromSelectInteraction(
       interaction,
-      this.$select[interactionId]
+      this.$select[interactionId],
     );
   } else {
     const response = Actions.getInvalidSelectResponseText();
@@ -1270,7 +1270,7 @@ Bot.getSettings = async function () {
   let result = Files.data.settings;
   if (!result) {
     return JSON.parse(
-      await fs.promises.readFile(path.join(__dirname, "data", "settings.json"))
+      await fs.promises.readFile(path.join(__dirname, "data", "settings.json")),
     );
   }
 };
@@ -1279,14 +1279,14 @@ Bot.installModule = function (moduleName, version) {
   return new Promise((resolve) => {
     try {
       require("child_process").execSync(
-        `npm i ${version ? `${moduleName}@${version}` : moduleName}`
+        `npm i ${version ? `${moduleName}@${version}` : moduleName}`,
       );
       return resolve(require(moduleName));
     } catch (error) {
       return console.log(
         `The required module "${
           version ? `${moduleName}@${version}` : moduleName
-        }" has been installed. Please restart your bot.`
+        }" has been installed. Please restart your bot.`,
       );
     }
   });
@@ -1502,7 +1502,7 @@ Actions.getSlashParameter = function (interaction, name, defaultValue) {
   if (interaction.__originalInteraction) {
     const result = this.getParameterFromInteraction(
       interaction.__originalInteraction,
-      name
+      name,
     );
     if (result !== null) {
       return result;
@@ -1518,9 +1518,7 @@ Actions.getSlashParameter = function (interaction, name, defaultValue) {
 };
 
 Actions._letterEmojis =
-  "🇦 🇧 🇨 🇩 🇪 🇫 🇬 🇭 🇮 🇯 🇰 🇱 🇲 🇳 🇴 🇵 🇶 🇷 🇸 🇹 🇺 🇻 🇼 🇽 🇾 🇿".split(
-    " "
-  );
+  "🇦 🇧 🇨 🇩 🇪 🇫 🇬 🇭 🇮 🇯 🇰 🇱 🇲 🇳 🇴 🇵 🇶 🇷 🇸 🇹 🇺 🇻 🇼 🇽 🇾 🇿".split(" ");
 
 Actions.convertTextToEmojis = function (text, useRegional = true) {
   let result = "";
@@ -1784,7 +1782,7 @@ Actions.preformActionsFromInteraction = function (
   interaction,
   cmd,
   meta = null,
-  initialTempVars = null
+  initialTempVars = null,
 ) {
   const invalidPermissions = this.getInvalidPermissionsResponse();
   const invalidCooldown = this.getInvalidCooldownResponse();
@@ -1793,21 +1791,21 @@ Actions.preformActionsFromInteraction = function (
       interaction.guild,
       interaction.member,
       interaction.user,
-      cmd
+      cmd,
     )
   ) {
     const timeRestriction = this.checkTimeRestriction(
       interaction.user,
       interaction,
       cmd,
-      true
+      true,
     );
     if (timeRestriction === true) {
       this.invokeInteraction(
         interaction,
         cmd.actions,
         initialTempVars,
-        meta === true ? cmd : meta
+        meta === true ? cmd : meta,
       );
     } else if (invalidCooldown) {
       const { format } = require("util");
@@ -1826,7 +1824,7 @@ Actions.preformActionsFromSelectInteraction = function (
   interaction,
   select,
   meta = null,
-  initialTempVars = null
+  initialTempVars = null,
 ) {
   const tempVars = initialTempVars ?? {};
   if (typeof select.tempVarName === "string") {
@@ -1835,8 +1833,8 @@ Actions.preformActionsFromSelectInteraction = function (
       !values || values.length === 0
         ? 0
         : values.length === 1
-        ? values[0]
-        : values;
+          ? values[0]
+          : values;
   }
   this.preformActionsFromInteraction(interaction, select, meta, tempVars);
 };
@@ -1872,7 +1870,7 @@ Actions.checkTimeRestriction = function (
   user,
   msgOrInteraction,
   cmd,
-  returnTimeString = false
+  returnTimeString = false,
 ) {
   if (!cmd._timeRestriction) return true;
   if (!user) return false;
@@ -1902,7 +1900,7 @@ Actions.checkTimeRestriction = function (
         false,
         "",
         msgOrInteraction?.member,
-        timeString
+        timeString,
       );
       return returnTimeString ? timeString : false;
     }
@@ -1964,7 +1962,7 @@ Actions.invokeActions = function (msg, actions, cmd = null) {
           name: cmd?.name,
           isEvent: false,
         },
-      })
+      }),
     );
   }
 };
@@ -1973,7 +1971,7 @@ Actions.invokeInteraction = function (
   interaction,
   actions,
   initialTempVars,
-  meta = null
+  meta = null,
 ) {
   const cacheData = {
     interaction,
@@ -2077,7 +2075,7 @@ Actions.getParameterFromInteraction = function (interaction, name) {
   if (interaction.__originalInteraction) {
     const result = this.getParameterFromInteraction(
       interaction.__originalInteraction,
-      name
+      name,
     );
     if (result !== null) {
       return result;
@@ -2178,7 +2176,7 @@ Actions.getSendTargetFromData = async function (typeData, varNameData, cache) {
   return await this.getSendTarget(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2259,7 +2257,7 @@ Actions.getSendTarget = async function (type, varName, cache) {
     case 102: {
       const searchValue = this.evalMessage(varName, cache);
       const result = Bot.bot.channels.cache.find(
-        (channel) => channel.name === searchValue
+        (channel) => channel.name === searchValue,
       );
       if (result) {
         return result;
@@ -2299,7 +2297,7 @@ Actions.getMemberFromData = async function (typeData, varNameData, cache) {
   return await this.getMember(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2330,7 +2328,7 @@ Actions.getMember = async function (type, varName, cache) {
       const searchValue = this.evalMessage(varName, cache);
       const result = await this.findMemberOrUserFromName(
         searchValue,
-        cache.server
+        cache.server,
       );
       if (result) {
         return result;
@@ -2341,7 +2339,7 @@ Actions.getMember = async function (type, varName, cache) {
       const searchValue = this.evalMessage(varName, cache);
       const result = await this.findMemberOrUserFromID(
         searchValue,
-        cache.server
+        cache.server,
       );
       if (result) {
         return result;
@@ -2358,7 +2356,7 @@ Actions.getMessageFromData = async function (typeData, varNameData, cache) {
   return await this.getMessage(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2380,7 +2378,7 @@ Actions.getServerFromData = async function (typeData, varNameData, cache) {
   return await this.getServer(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2395,7 +2393,7 @@ Actions.getServer = async function (type, varName, cache) {
     case 100: {
       const searchValue = this.evalMessage(varName, cache);
       const result = Bot.bot.guilds.cache.find(
-        (guild) => guild.name === searchValue
+        (guild) => guild.name === searchValue,
       );
       if (result) {
         return result;
@@ -2420,7 +2418,7 @@ Actions.getRoleFromData = async function (typeData, varNameData, cache) {
   return await this.getRole(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2452,7 +2450,7 @@ Actions.getRole = async function (type, varName, cache) {
       if (server) {
         const searchValue = this.evalMessage(varName, cache);
         const result = server.roles.cache.find(
-          (role) => role.name === searchValue
+          (role) => role.name === searchValue,
         );
         if (result) {
           return result;
@@ -2480,7 +2478,7 @@ Actions.getChannelFromData = async function (typeData, varNameData, cache) {
   return await this.getChannel(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2525,7 +2523,7 @@ Actions.getChannel = async function (type, varName, cache) {
     case 100: {
       const searchValue = this.evalMessage(varName, cache);
       const result = Bot.bot.channels.cache.find(
-        (channel) => channel.name === searchValue
+        (channel) => channel.name === searchValue,
       );
       if (result) {
         return result;
@@ -2549,12 +2547,12 @@ Actions.getChannel = async function (type, varName, cache) {
 Actions.getVoiceChannelFromData = async function (
   typeData,
   varNameData,
-  cache
+  cache,
 ) {
   return await this.getVoiceChannel(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2592,7 +2590,7 @@ Actions.getVoiceChannel = async function (type, varName, cache) {
     case 100: {
       const searchValue = this.evalMessage(varName, cache);
       const result = Bot.bot.channels.cache.find(
-        (channel) => channel.name === searchValue
+        (channel) => channel.name === searchValue,
       );
       if (result) {
         return result;
@@ -2633,7 +2631,7 @@ Actions.getListFromData = async function (typeData, varNameData, cache) {
   return await this.getList(
     parseInt(typeData, 10),
     this.evalMessage(varNameData, cache),
-    cache
+    cache,
   );
 };
 
@@ -2697,7 +2695,7 @@ Actions.sendOrReplyOrEditMessage = async function (
     isEdit: false,
     editMessage: 0,
     callback: null,
-  }
+  },
 ) {
   let resultMsg;
   if (options.isEdit === true) {
@@ -2805,7 +2803,7 @@ Actions.executeResults = function (result, data, cache) {
     case 2: {
       const val = parseInt(
         this.evalMessage(result ? data.iftrueVal : data.iffalseVal, cache),
-        10
+        10,
       );
       const index = Math.max(val - 1, 0);
       if (cache.actions[index]) {
@@ -2817,7 +2815,7 @@ Actions.executeResults = function (result, data, cache) {
     case 3: {
       const amount = parseInt(
         this.evalMessage(result ? data.iftrueVal : data.iffalseVal, cache),
-        10
+        10,
       );
       const index2 = cache.index + amount + 1;
       if (cache.actions[index2]) {
@@ -2829,7 +2827,7 @@ Actions.executeResults = function (result, data, cache) {
     case 4: {
       const anchorName = this.evalMessage(
         result ? data.iftrueVal : data.iffalseVal,
-        cache
+        cache,
       );
       cache.goToAnchor(anchorName);
       break;
@@ -2837,7 +2835,7 @@ Actions.executeResults = function (result, data, cache) {
     case 99: {
       this.executeSubActionsThenNextAction(
         result ? data.iftrueActions : data.iffalseActions,
-        cache
+        cache,
       );
       break;
     }
@@ -2848,7 +2846,7 @@ Actions.executeResults = function (result, data, cache) {
 
 Actions.executeSubActionsThenNextAction = function (actions, cache) {
   return this.executeSubActions(actions, cache, () =>
-    this.callNextAction(cache)
+    this.callNextAction(cache),
   );
 };
 
@@ -2870,7 +2868,7 @@ Actions.generateSubCache = function (cache, actions) {
 Actions.resolveAttachmentUrl = async function (
   attachment,
   filesArray,
-  options = { name: "", description: "", spoiler: false }
+  options = { name: "", description: "", spoiler: false },
 ) {
   if (!attachment) return undefined;
   if (attachment instanceof DiscordJS.AttachmentBuilder) {
@@ -2903,7 +2901,7 @@ Actions.resolveAttachmentUrl = async function (
     } catch {
       if (fs.existsSync(attachment)) {
         const attach = new DiscordJS.AttachmentBuilder(
-          await fs.promises.readFile(attachment)
+          await fs.promises.readFile(attachment),
         )
           .setName(options.name || path.basename(attachment))
           .setDescription(options.description)
@@ -2918,7 +2916,7 @@ Actions.resolveAttachmentUrl = async function (
 
 Actions.resolveAttachment = async function (
   attachment,
-  options = { name: "", description: "", spoiler: false }
+  options = { name: "", description: "", spoiler: false },
 ) {
   if (!attachment) return undefined;
   if (attachment instanceof DiscordJS.AttachmentBuilder) {
@@ -2948,7 +2946,7 @@ Actions.resolveAttachment = async function (
         return new URL(attachment).href;
       } catch {
         const attach = new DiscordJS.AttachmentBuilder(
-          await fs.promises.readFile(attachment)
+          await fs.promises.readFile(attachment),
         )
           .setName(options.name || path.basename(attachment))
           .setDescription(options.description)
@@ -2967,7 +2965,7 @@ Actions.generatePoll = function (
     allowMultiselect: null,
     duration: null,
   },
-  cache
+  cache,
 ) {
   const question = this.evalMessage(options.question.text, cache);
   const answers = options.answers;
@@ -2995,7 +2993,7 @@ Actions.generatePollAnswer = function (
     text: null,
     emoji: null,
   },
-  cache
+  cache,
 ) {
   const text = this.evalMessage(options.text, cache) || null;
   const emoji = this.evalMessage(options.emoji, cache) || null;
@@ -3024,7 +3022,7 @@ Actions.generateEmbed = function (
     title: "embed",
     url: null,
   },
-  cache
+  cache,
 ) {
   const author = {
     name: this.evalMessage(options.author.name, cache) || null,
@@ -3067,7 +3065,7 @@ Actions.generateEmbedField = function (
     value: null,
     inline: null,
   },
-  cache
+  cache,
 ) {
   const name = this.evalMessage(options.name, cache) || null;
   const value = this.evalMessage(options.value, cache) || null;
@@ -3091,7 +3089,7 @@ Actions.generateButton = function (
     style: DiscordJS.ButtonStyle.Primary,
     url: "https://www.google.com",
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const disabled = this.parseBool(options.disabled);
@@ -3168,7 +3166,7 @@ Actions.generateAnySelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   // Select Menu Types:
   //
@@ -3198,7 +3196,7 @@ Actions.generateAnySelectMenu = function (
           label: o.label,
           value: o.value,
         },
-        cache
+        cache,
       );
       options.push(option);
     }
@@ -3212,7 +3210,7 @@ Actions.generateAnySelectMenu = function (
         placeholder: placeholder,
         required: required,
       },
-      cache
+      cache,
     );
   } else if (type === 1) {
     selectMenu = this.generateUserSelectMenu(
@@ -3225,7 +3223,7 @@ Actions.generateAnySelectMenu = function (
         placeholder: placeholder,
         required: required,
       },
-      cache
+      cache,
     );
   } else if (type === 2) {
     selectMenu = this.generateRoleSelectMenu(
@@ -3238,7 +3236,7 @@ Actions.generateAnySelectMenu = function (
         placeholder: placeholder,
         required: required,
       },
-      cache
+      cache,
     );
   } else if (type === 3) {
     selectMenu = this.generateMentionableSelectMenu(
@@ -3251,7 +3249,7 @@ Actions.generateAnySelectMenu = function (
         placeholder: placeholder,
         required: required,
       },
-      cache
+      cache,
     );
   } else if (type === 4) {
     selectMenu = this.generateChannelSelectMenu(
@@ -3265,7 +3263,7 @@ Actions.generateAnySelectMenu = function (
         placeholder: placeholder,
         required: required,
       },
-      cache
+      cache,
     );
   }
   return selectMenu;
@@ -3281,7 +3279,7 @@ Actions.generateStringSelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const disabled = this.parseBool(options.disabled) || false;
@@ -3311,7 +3309,7 @@ Actions.generateStringSelectMenuOption = function (
     label: "...",
     value: "...",
   },
-  cache
+  cache,
 ) {
   const oDefault = this.parseBool(options.default) || false;
   const oDescription = this.evalMessage(options.description, cache) || null;
@@ -3337,7 +3335,7 @@ Actions.generateUserSelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const defaultUsers = null;
@@ -3369,7 +3367,7 @@ Actions.generateRoleSelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const defaultRoles = null;
@@ -3401,7 +3399,7 @@ Actions.generateMentionableSelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const defaultValues = null;
@@ -3434,12 +3432,12 @@ Actions.generateChannelSelectMenu = function (
     placeholder: null,
     required: null,
   },
-  cache
+  cache,
 ) {
   const customId = this.evalMessage(String(options.customId), cache);
   const channelTypes = options.channelTypes;
   const defaultChannels = JSON.parse(
-    this.evalMessage(options.defaultChannels, cache) || "[]"
+    this.evalMessage(options.defaultChannels, cache) || "[]",
   );
   const disabled = this.parseBool(options.disabled) || false;
   const minValues =
@@ -3464,7 +3462,7 @@ Actions.addButtonToActionRowArray = function (
   array,
   rowText,
   buttonData,
-  cache
+  cache,
 ) {
   let row = 0;
   if (!rowText) {
@@ -3495,7 +3493,7 @@ Actions.addButtonToActionRowArray = function (
       this.displayError(
         null,
         cache,
-        "Action row #" + row + " exceeded the maximum of 5 buttons!"
+        "Action row #" + row + " exceeded the maximum of 5 buttons!",
       );
     } else {
       array[row].push(buttonData);
@@ -3509,7 +3507,7 @@ Actions.addSelectToActionRowArray = function (
   array,
   rowText,
   selectData,
-  cache
+  cache,
 ) {
   let row = 0;
   if (!rowText) {
@@ -3530,7 +3528,7 @@ Actions.addSelectToActionRowArray = function (
       this.displayError(
         null,
         cache,
-        `Action row #${row} cannot have a select menu when there are any buttons on it!`
+        `Action row #${row} cannot have a select menu when there are any buttons on it!`,
       );
     } else {
       array[row].push(selectData);
@@ -3583,7 +3581,7 @@ Actions.registerTemporaryInteraction = function (
   customId,
   userId,
   multi,
-  interactionCallback
+  interactionCallback,
 ) {
   this._temporaryInteractionIdMax ??= 0;
   this._temporaryInteractions ??= {};
@@ -3652,9 +3650,12 @@ Actions.registerModalSubmitResponses = function (interactionId, callback) {
 
   // clear up interaction after a while
   require("node:timers")
-    .setTimeout(() => {
-      this.clearAllTemporaryInteractions(interactionId);
-    }, 60 * 60 * 1000)
+    .setTimeout(
+      () => {
+        this.clearAllTemporaryInteractions(interactionId);
+      },
+      60 * 60 * 1000,
+    )
     .unref();
 };
 
@@ -3786,7 +3787,7 @@ Events.registerEvents = function (bot) {
     if (d.length > 0 && $evts[String(i)]) {
       bot.on(
         d[0],
-        this.callEvents.bind(this, String(i), d[1], d[2], d[3], !!d[4], d[5])
+        this.callEvents.bind(this, String(i), d[1], d[2], d[3], !!d[4], d[5]),
       );
     }
   }
@@ -3805,7 +3806,7 @@ Events.callEvents = function (
   mustServe,
   condition,
   arg1,
-  arg2
+  arg2,
 ) {
   if (mustServe && ((temp1 > 0 && !arg1.guild) || (temp2 > 0 && !arg2.guild)))
     return;
@@ -4017,6 +4018,143 @@ Files.decrypt = function (text) {
   return decipher.update(text, "hex", "utf8") + decipher.final("utf8");
 };
 
+Files.db = {};
+Files.db.data = {};
+Files.db.enabled = true;
+
+Files.db.prepareDB = function (db, memoryKey) {
+  db.prepare(
+    `
+    CREATE TABLE IF NOT EXISTS data (
+      key TEXT NOT NULL,
+      dataName TEXT NOT NULL,
+      value REAL,
+      PRIMARY KEY (key, dataName)
+    )
+  `,
+  ).run();
+  db._updateMemory = () => {
+    const rows = db.prepare(`SELECT key, dataName, value FROM data`).all();
+    const obj = {};
+    for (const row of rows) {
+      if (!obj[row.key]) obj[row.key] = {};
+      obj[row.key][row.dataName] = row.value;
+    }
+    Files.db.data[memoryKey] = obj;
+  };
+  db.setData = (key, dataName, value) => {
+    db.prepare(
+      `
+      INSERT INTO data (key, dataName, value)
+      VALUES (?, ?, ?)
+      ON CONFLICT(key, dataName)
+      DO UPDATE SET value = excluded.value
+    `,
+    ).run(key, dataName, value);
+    db._updateMemory();
+  };
+  db.addData = (key, dataName, value) => {
+    db.prepare(
+      `
+      INSERT INTO data (key, dataName, value)
+      VALUES (?, ?, ?)
+      ON CONFLICT(key, dataName)
+      DO UPDATE SET value = value + excluded.value
+    `,
+    ).run(key, dataName, value);
+    db._updateMemory();
+  };
+  db.subtractData = (key, dataName, value) => {
+    db.prepare(
+      `
+      INSERT INTO data (key, dataName, value)
+      VALUES (?, ?, ?)
+      ON CONFLICT(key, dataName)
+      DO UPDATE SET value = value - excluded.value
+    `,
+    ).run(key, dataName, value);
+    db._updateMemory();
+  };
+  db.getData = (key, dataName, defaultValue = 0, debugMode = false) => {
+    const row = db
+      .prepare(
+        `
+      SELECT value FROM data WHERE key = ? AND dataName = ?
+    `,
+      )
+      .get(key, dataName);
+    const result = row?.value ?? defaultValue;
+    if (debugMode) console.log(result);
+    return result;
+  };
+  db.getAllData = (key, dataName, defaultValue = 0, debugMode = false) => {
+    if (key && dataName) {
+      return db.getData(key, dataName, defaultValue, debugMode);
+    } else if (key && !dataName) {
+      const rows = db
+        .prepare(`SELECT dataName, value FROM data WHERE key = ?`)
+        .all(key);
+      const obj = {};
+      for (const row of rows) obj[row.dataName] = row.value;
+      if (debugMode) console.log(obj);
+      return obj;
+    } else if (!key && !dataName) {
+      const rows = db.prepare(`SELECT key, dataName, value FROM data`).all();
+      const obj = {};
+      for (const row of rows) {
+        if (!obj[row.key]) obj[row.key] = {};
+        obj[row.key][row.dataName] = row.value;
+      }
+      if (debugMode) console.log(obj);
+      return obj;
+    } else {
+      return defaultValue;
+    }
+  };
+  db.clearData = (key, dataName) => {
+    db.prepare(
+      `
+      DELETE FROM data WHERE key = ? AND dataName = ?
+    `,
+    ).run(key, dataName);
+    db._updateMemory();
+  };
+  db._updateMemory();
+  return db;
+};
+
+Files.db.initDataBase = function () {
+  try {
+    const Database = require("better-sqlite3");
+    Files.db.DataBase = {
+      channels: Files.db.prepareDB(
+        new Database(path.join(__dirname, "data/channels.db")),
+        "channels",
+      ),
+      globals: Files.db.prepareDB(
+        new Database(path.join(__dirname, "data/globals.db")),
+        "globals",
+      ),
+      messages: Files.db.prepareDB(
+        new Database(path.join(__dirname, "data/messages.db")),
+        "messages",
+      ),
+      players: Files.db.prepareDB(
+        new Database(path.join(__dirname, "data/players.db")),
+        "players",
+      ),
+      servers: Files.db.prepareDB(
+        new Database(path.join(__dirname, "data/servers.db")),
+        "servers",
+      ),
+    };
+  } catch {
+    Files.db.DataBase = {};
+    Files.db.data = {};
+    Files.db.enabled = false;
+  }
+};
+
 Files.convertItem = function (item) {
   if (Array.isArray(item)) {
     const result = [];
@@ -4057,7 +4195,7 @@ Files.restoreServerVariables = function () {
         this.data.serverVars[keys[i]][varNames[j]],
         2,
         varNames[j],
-        keys[i]
+        keys[i],
       );
     }
   }
@@ -4201,6 +4339,8 @@ Files.restoreUser = function (value, bot) {
 
 Files.initEncryption();
 
+Files.db.initDataBase();
+
 //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 //region # Audio
 // Contains functions for voice channel stuff.
@@ -4273,7 +4413,7 @@ Audio.Subscription = class {
             await Audio.voice.entersState(
               this.voiceConnection,
               Audio.voice.VoiceConnectionStatus.Connecting,
-              5_000
+              5_000,
             );
           } catch {
             // Probably removed from voice channel
@@ -4304,7 +4444,7 @@ Audio.Subscription = class {
           await Audio.voice.entersState(
             this.voiceConnection,
             Audio.voice.VoiceConnectionStatus.Ready,
-            20_000
+            20_000,
           );
         } catch {
           if (
@@ -4365,7 +4505,7 @@ Audio.Subscription = class {
           let guild = null;
           try {
             guild = await Bot.bot.guilds.resolve(
-              this.voiceConnection.joinConfig.guildId
+              this.voiceConnection.joinConfig.guildId,
             );
           } catch (e) {
             console.error(e);
@@ -4487,7 +4627,7 @@ Audio.connectToVoice = function (voiceChannel) {
       channelId: voiceChannel.id,
       guildId: voiceChannel.guildId,
       selfDeaf: (Files.data.settings.autoDeafen ?? "true") === "true",
-    })
+    }),
   );
 
   this.subscriptions.set(voiceChannel.guildId, subscription);
@@ -4702,6 +4842,8 @@ Images.drawImageOnImage = function (img1, img2, x, y) {
 //region # Giveaways
 // Contains functions for giveaways management.
 //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+console.log(Files.db);
 
 const Giveaways = (DBM.Giveaways = {});
 
