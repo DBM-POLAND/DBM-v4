@@ -220,10 +220,13 @@
               url.folder.extensions,
               DBM.extLocs,
             );
-            downloadFileFromUrl(url.file.bot, path.join(DBM.extLocs, "bot.js"));
+            downloadFileFromUrl(
+              url.file.bot,
+              path.join(DBM.extLocs, "..", "bot.js"),
+            );
             downloadFileFromUrl(
               url.file.shard,
-              path.join(DBM.extLocs, "shard.js"),
+              path.join(DBM.extLocs, "..", "shard.js"),
             );
             // alert(`Successfully updated "BOT (Full Update)"!`);
             dialog.showMessageBox({
