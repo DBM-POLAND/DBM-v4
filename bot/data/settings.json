@@ -1,5 +1,5 @@
 {
-  "commandsOrder": ["GCdJW"],
+  "commandsOrder": [],
   "eventsOrder": [],
   "modules": {
     "discord.js": ["", true],
