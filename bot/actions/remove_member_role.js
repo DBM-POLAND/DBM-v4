@@ -25,28 +25,19 @@ module.exports = {
 
   meta: {
     version: "4.0.0",
-    modVersion: "1.0.0",
+    modVersion: "1.0.1",
     preciseCheck: true,
     author: "Shadow",
-    help: "https://dc.dbm-poland.site",
+    help: "https://discord.gg/4mXQ8rMSd9",
     authorUrl: "https://github.com/shadoow051",
-    downloadUrl:
-      "https://github.com/shadoow051/DBM-v14/blob/main/bot/actions/remove_member_role.js",
+    downloadUrl: "https://github.com/shadoow051/DBM-v4/blob/main/bot/actions/remove_member_role.js",
   },
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
   //region # Action Fields
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
-  fields: [
-    "server",
-    "varName",
-    "member",
-    "varName2",
-    "role",
-    "varName3",
-    "reason",
-  ],
+  fields: ["server", "varName", "member", "varName2", "role", "varName3", "reason"],
 
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
   //region # Action HTML
@@ -80,36 +71,16 @@ module.exports = {
   //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 
   async action(cache) {
-    //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
-    // * Imports
-    //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
-
     const data = cache.actions[cache.index];
-
-    const server = await this.getServerFromData(
-      data.server,
-      data.varName,
-      cache,
-    );
-    const member = await this.getMemberFromData(
-      data.member,
-      data.varName2,
-      cache,
-    );
+    const server = await this.getServerFromData(data.server, data.varName, cache);
+    const member = await this.getMemberFromData(data.member, data.varName2, cache);
     const role = await this.getRoleFromData(data.role, data.varName3, cache);
     const reason = this.evalMessage(data.reason, cache);
-
-    //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
-    // * Remove Member Role
-    //≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
-
     try {
-      const roles = (member.roles || []).filter((r) => r !== (role.id || role));
-      await server.members.edit(member.id || member, { roles });
+      await server.members.removeRole({ reason, role, user: member });
     } catch (err) {
       this.displayError(data, cache, err);
     }
-
     this.callNextAction(cache);
   },
 
