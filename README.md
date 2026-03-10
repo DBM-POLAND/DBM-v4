@@ -22,14 +22,14 @@
   </div>
 </div>
 
-**[DBM POLAND](https://dc.dbm-poland.site) is a community-driven open source project whose goal is to modify, extend, and improve [Discord Bot Maker](https://store.steampowered.com/app/682130/Discord_Bot_Maker/).**
+**[DBM POLAND](https://discord.gg/4mXQ8rMSd9) is a community-driven open source project whose goal is to modify, extend, and improve [Discord Bot Maker](https://store.steampowered.com/app/682130/Discord_Bot_Maker/).**
 
 ---
 
 # Links:
 
 - **Website: https://dbm-poland.site** _(Currently Unavailable)_
-- **Discord: https://dc.dbm-poland.site**
+- **Discord: https://discord.gg/4mXQ8rMSd9**
 
 # How to Download?
 
