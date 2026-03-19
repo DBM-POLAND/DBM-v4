@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Discord Bot Maker</title>
+  </head>
+  <body
+    onkeydown="DBM.deleteSelection(event)"
+    style="width: 100%; height: 100%"
+  >
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../style/pretty/pretty-checkbox.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../style/semantic/dist/semantic.css"
+    />
+    <div class="dbmsnackbar" id="refreshSnackbar"></div>
+    <div class="dbmsnackbar" id="updateSnackbar"></div>
+    <div id="outsideCompleteContainer">
+      <div id="completeContainer">
+        <div style="text-align: center; padding-top: 20px" id="id_tabs_main">
+          <div class="ui blue buttons" style="width: 95%" id="id_tabs">
+            <button
+              id="a_tab_com"
+              class="ui button active"
+              style="width: 25%"
+              onclick="DBM.shiftTabs(event, 'Commands', 0)"
+            >
+              <span id="a_tab_com_label"
+                ><i class="book icon"></i>Commands</span
+              >
+            </button>
+            <button
+              id="a_tab_eve"
+              class="ui button"
+              style="width: 25%"
+              onclick="DBM.shiftTabs(event, 'Events', 1)"
+            >
+              <span id="a_tab_eve_label"
+                ><i class="chart line icon"></i>Events</span
+              >
+            </button>
+            <button
+              id="a_tab_sets"
+              class="ui button"
+              style="width: 25%"
+              onclick="DBM.shiftTabs(event, 'Settings', 2)"
+            >
+              <span id="a_tab_sets_label"
+                ><i class="cogs icon"></i>Settings</span
+              >
+            </button>
+            <button
+              id="a_tab_tools"
+              class="ui button"
+              style="width: 5%"
+              onclick="DBM.shiftTabs(event, 'Tools', 3)"
+            >
+              <span id="a_tab_tools_label"><i class="tasks icon"></i></span>
+            </button>
+          </div>
+        </div>
+        <div
+          id="id_pages"
+          style="padding: 12px 20px; width: 100%; height: 100%"
+        >
+          <div id="Commands" style="display: block" class="page">
+            <div class="action-holder">
+              <div
+                style="width: 200px; text-align: center; margin-bottom: 14px"
+              >
+                <div
+                  onclick="DBM.onCreateCommand(false)"
+                  id="createcommandbutton"
+                  class="ui vertical dbm_animated small button dbm_animated_button_commandevent_list"
+                  tabindex="0"
+                >
+                  <div
+                    class="dbm_animated_label hidden content"
+                    id="createcommandbuttonlabel"
+                  >
+                    New Command
+                  </div>
+                  <div class="visible content">
+                    <i class="plus icon"></i>
+                  </div>
+                </div>
+                <div
+                  onclick="DBM.onCreateFolder(false)"
+                  id="createfolderbutton"
+                  class="ui vertical dbm_animated small button dbm_animated_button_commandevent_list"
+                  tabindex="0"
+                >
+                  <div
+                    class="dbm_animated_label hidden content"
+                    id="createfolderbuttonlabel"
+                  >
+                    New Folder
+                  </div>
+                  <div class="visible content">
+                    <i class="folder open icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="actionslist cmdevtlist"
+                id="myactions"
+                style="width: 200px; height: 381px"
+              ></div>
+            </div>
+            <div id="command-content" style="margin-left: 250px; display: none">
+              <br />
+              <div style="display: block">
+                <div
+                  style="
+                    float: left;
+                    width: calc(100% - max(220px, 50% - 162px) - 174px);
+                  "
+                >
+                  <span class="dbminputlabel" id="comLabel"
+                    >Slash Command Name</span
+                  ><br />
+                  <input
+                    class="dbm_input"
+                    id="name"
+                    style="width: 100%; height: 38px"
+                    onkeydown="DBM.preventSpace(event)"
+                    onkeyup="DBM.tempSaveData('name')"
+                    type="text"
+                  />
+                </div>
+                <div
+                  style="
+                    float: left;
+                    width: calc(max(220px, 50% - 162px));
+                    padding-left: 25px;
+                  "
+                >
+                  <span class="dbminputlabel dbmdropdownlabel" id="commandtype"
+                    >Command Type</span
+                  ><br />
+                  <div class="ui right labeled icon input" style="width: 100%">
+                    <select
+                      class="ui fluid dropdown"
+                      style="width: 60%; float: left"
+                      id="comType"
+                      onchange="DBM.tempSaveData('comType')"
+                    >
+                      <option value="4" id="slashcommand">Slash Command</option>
+                      <option value="5" id="usercommand">
+                        User Menu Command
+                      </option>
+                      <option value="6" id="messagecommand">
+                        Msg. Menu Command
+                      </option>
+                      <option value="0" id="normalcommand">Text Command</option>
+                      <option value="1" id="includesword">Includes Word</option>
+                      <option value="2" id="matchesregularexpression">
+                        Regular Expression
+                      </option>
+                      <option value="3" id="anymessage">Any Message</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="float: left; padding-left: 25px; width: 174px">
+                  <span
+                    class="dbminputlabel dbmdropdownlabel"
+                    id="parameterstext"
+                    >Parameters</span
+                  ><br />
+                  <button
+                    class="tiny compact ui labeled icon button"
+                    id="paramsbutton"
+                    onclick="DBM.onParamsButtonPressed()"
+                  >
+                    <i class="expand icon"></i
+                    ><span id="com_parameters">0 Parameters</span><br /><i
+                      ><span id="com_optional_parameters">(0 Optional)</span></i
+                    >
+                  </button>
+                </div>
+              </div>
+              <br /><br /><br /><br />
+
+              <div>
+                <div style="float: left; width: calc(50% - 12px)">
+                  <span class="dbminputlabel" id="comDescription"
+                    >Command Description</span
+                  ><br />
+                  <input
+                    class="dbm_input"
+                    id="description"
+                    style="width: 100%; height: 38px"
+                    onkeyup="DBM.tempSaveData('description')"
+                    type="text"
+                  />
+                </div>
+                <div style="float: right; width: calc(50% - 13px)">
+                  <span
+                    class="dbminputlabel dbmdropdownlabel"
+                    id="comRestriction"
+                    >Command Restriction</span
+                  ><br />
+                  <div style="width: 100%">
+                    <select
+                      class="ui fluid dropdown"
+                      id="restriction"
+                      onchange="DBM.tempSaveData('restriction')"
+                    >
+                      <option value="0" id="commandrestrict_none">None</option>
+                      <option value="1" id="commandrestrict_server">
+                        Server Only
+                      </option>
+                      <option value="2" id="commandrestrict_owner">
+                        Owner Only
+                      </option>
+                      <option value="3" id="commandrestrict_dms">
+                        DMs Only
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <br /><br /><br /><br />
+              <div>
+                <div
+                  style="float: left; width: calc(50% - 12px)"
+                  id="mainpermissionselectorid"
+                >
+                  <span
+                    class="dbminputlabel dbmdropdownlabel"
+                    id="userrequiredpermission"
+                    >Primary Required Permission</span
+                  ><br />
+                  <select
+                    class="ui fluid dropdown"
+                    id="permissions"
+                    onchange="DBM.tempSaveData('permissions')"
+                  >
+                    <!-- Permissions now managed in "config/Permissions.json" -->
+                    <!-- TEMPLATE: <option value="NONE" id="userreq_none">None</option> -->
+                  </select>
+                </div>
+                <div
+                  style="float: right; width: calc(50% - 13px)"
+                  id="secondarypermissionselectorid"
+                >
+                  <span
+                    class="dbminputlabel dbmdropdownlabel"
+                    id="userrequiredpermission2"
+                    >Secondary Required Permission</span
+                  ><br />
+                  <select
+                    class="ui fluid dropdown"
+                    id="permissions2"
+                    onchange="DBM.tempSaveData('permissions2')"
+                  ></select>
+                </div>
+              </div>
+              <br /><br /><br /><br />
+              <action-list-input
+                style="padding-top: 51px"
+                globalIndex="0"
+                actionListId="actions"
+                actionListLabelId="com_actions"
+                addButtonId="com_create"
+                editButtonId="com_edit"
+                deleteButtonId="com_delete"
+                toggleButtonId="com_actiontoggle"
+              ></action-list-input>
+            </div>
+            <div
+              id="command-folder-content"
+              style="margin-left: 250px; display: none"
+            >
+              <br />
+              <div style="display: block">
+                <span class="dbminputlabel" id="folderNameLabel"
+                  >Folder Name</span
+                ><br />
+                <input
+                  class="dbm_input"
+                  id="folderName"
+                  style="width: 100%; height: 38px"
+                  onkeyup="DBM.tempFolderSaveData(event, false)"
+                  type="text"
+                />
+
+                <br />
+
+                <div style="display: flex; justify-content: center">
+                  <dbm-checkbox
+                    style="float: left"
+                    inputId="customFolderColor"
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                    labelId="customFolderColorLabel"
+                    label="Custom Color"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="folderItalic"
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                    labelId="folderItalicLabel"
+                    label="Italic"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="folderBold"
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                    labelId="folderBoldLabel"
+                    label="Bold"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="folderUnderline"
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                    labelId="folderUnderlineLabel"
+                    label="Underline"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="folderStrikethrough"
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                    labelId="folderStrikethroughLabel"
+                    label="Strikethrough"
+                  ></dbm-checkbox>
+                </div>
+
+                <br /><br /><br />
+
+                <div style="width: 45%; float: left">
+                  <span class="dbminputlabel" id="folderColorLabel"
+                    >Folder Color</span
+                  ><br />
+                  <input
+                    class="round"
+                    type="color"
+                    id="folderColor"
+                    value="#ffffff"
+                    oninput="DBM.tempFolderSaveData(event, false)"
+                  />
+                </div>
+
+                <div style="width: 45%; float: right">
+                  <span class="dbminputlabel" id="folderIconLabel"
+                    >Folder Icon</span
+                  ><br />
+                  <input
+                    class="settings"
+                    type="text"
+                    id="folderIcon"
+                    value=""
+                    placeholder="Leave blank for folder icon..."
+                    onchange="DBM.tempFolderSaveData(event, false)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="Events" class="page">
+            <div class="event-action-holder">
+              <div
+                style="width: 200px; text-align: center; margin-bottom: 14px"
+              >
+                <div
+                  onclick="DBM.onCreateCommand(true)"
+                  class="ui vertical dbm_animated small button dbm_animated_button_commandevent_list"
+                  tabindex="0"
+                >
+                  <div
+                    class="dbm_animated_label hidden content"
+                    id="createeventbuttonlabel"
+                  >
+                    New Event
+                  </div>
+                  <div class="visible content">
+                    <i class="plus icon"></i>
+                  </div>
+                </div>
+                <div
+                  onclick="DBM.onCreateFolder(true)"
+                  class="ui vertical dbm_animated small button dbm_animated_button_commandevent_list"
+                  tabindex="0"
+                >
+                  <div
+                    class="dbm_animated_label hidden content"
+                    id="createeventfolderbuttonlabel"
+                  >
+                    New Folder
+                  </div>
+                  <div class="visible content">
+                    <i class="folder open icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="actionslist cmdevtlist"
+                id="emyactions"
+                style="width: 200px; height: 381px"
+              ></div>
+            </div>
+            <div
+              id="event-command-content"
+              style="margin-left: 250px; display: none"
+            >
+              <br />
+              <span class="dbminputlabel" id="eventname">Event Name</span><br />
+              <input
+                class="dbm_input"
+                id="ename"
+                style="width: 100%; height: 38px"
+                onkeyup="DBM.etempSaveData('ename')"
+                type="text"
+              />
+              <br />
+              <span class="dbminputlabel dbmdropdownlabel" id="eventtrigger"
+                >Event Trigger</span
+              ><br />
+              <select
+                class="ui fluid dropdown"
+                id="event-type"
+                style="width: 100%"
+                onchange="DBM.etempSaveData('event-type')"
+              >
+                <!-- Events configured in the code -->
+                <!-- TEMPLATE: <option value="0" id="eventrig_none">None</option> -->
+              </select>
+              <br />
+              <div id="tempVarStore">
+                <span class="dbminputlabel" id="tempLabel"></span>
+                <input
+                  class="dbm_input"
+                  id="etemp"
+                  style="width: 100%"
+                  onchange="DBM.etempSaveData('etemp')"
+                  type="text"
+                />
+              </div>
+              <br />
+              <div id="tempVarStore2" style="position: absolute">
+                <span class="dbminputlabel" id="tempLabel2"></span>
+                <input
+                  class="dbm_input"
+                  id="etemp2"
+                  style="width: 100%"
+                  onchange="DBM.etempSaveData('etemp2')"
+                  type="text"
+                />
+              </div>
+              <action-list-input
+                style="padding-top: 67px"
+                isEvent="true"
+                globalIndex="1"
+                actionListId="event-actions"
+                actionListLabelId="eve_actions"
+                addButtonId="eve_create"
+                editButtonId="eve_edit"
+                deleteButtonId="eve_delete"
+                toggleButtonId="eve_actiontoggle"
+              ></action-list-input>
+            </div>
+            <div
+              id="event-folder-content"
+              style="margin-left: 250px; display: none"
+            >
+              <br />
+              <div style="display: block">
+                <span class="dbminputlabel" id="efolderNameLabel"
+                  >Folder Name</span
+                ><br />
+                <input
+                  class="dbm_input"
+                  id="efolderName"
+                  style="width: 100%; height: 38px"
+                  onkeyup="DBM.tempFolderSaveData(event, true)"
+                  type="text"
+                />
+
+                <br />
+
+                <div style="display: flex; justify-content: center">
+                  <dbm-checkbox
+                    style="float: left"
+                    inputId="ecustomFolderColor"
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                    labelId="ecustomFolderColorLabel"
+                    label="Custom Color"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="efolderItalic"
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                    labelId="efolderItalicLabel"
+                    label="Italic"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="efolderBold"
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                    labelId="efolderBoldLabel"
+                    label="Bold"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="efolderUnderline"
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                    labelId="efolderUnderlineLabel"
+                    label="Underline"
+                  ></dbm-checkbox>
+
+                  <dbm-checkbox
+                    style="margin-left: 1%; float: left"
+                    inputId="efolderStrikethrough"
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                    labelId="efolderStrikethroughLabel"
+                    label="Strikethrough"
+                  ></dbm-checkbox>
+                </div>
+
+                <br /><br /><br />
+
+                <div style="width: 45%; float: left">
+                  <span class="dbminputlabel" id="efolderColorLabel"
+                    >Folder Color</span
+                  ><br />
+                  <input
+                    class="round"
+                    type="color"
+                    id="efolderColor"
+                    value="#ffffff"
+                    oninput="DBM.tempFolderSaveData(event, true)"
+                  />
+                </div>
+
+                <div style="width: 45%; float: right">
+                  <span class="dbminputlabel" id="efolderIconLabel"
+                    >Folder Icon</span
+                  ><br />
+                  <input
+                    class="settings"
+                    type="text"
+                    id="efolderIcon"
+                    value=""
+                    placeholder="Leave blank for folder icon..."
+                    onchange="DBM.tempFolderSaveData(event, true)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="Settings" class="page" style="padding-top: 20px">
+            <div class="ui tall stacked segment" style="margin-bottom: 40px">
+              <h4 class="ui header" id="settingsheader">Settings</h4>
+              <p id="settings-description">
+                <span id="startdescsettings"
+                  >Use this page to register all of your bot's information and
+                  connect it to your project! If you have not created a bot
+                  account yet, you may do so by visiting </span
+                ><a
+                  href="#"
+                  onclick="DBM.openLink('https://discordapp.com/developers/applications/me')"
+                  id="discorddevpage"
+                  >Discord's developer page</a
+                ><span id="enddescsettings"
+                  >. One may also customize the data encryption password and
+                  other various properties pertaining to the bot.</span
+                >
+              </p>
+            </div>
+            <ul class="tabs" role="tablist">
+              <li>
+                <input type="radio" name="tabs" id="tab1" checked />
+                <label
+                  class="tablabel"
+                  for="tab1"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="panel1"
+                  tabindex="0"
+                  ><i class="puzzle piece icon"></i
+                  ><span id="settingstablabel1">Bot Settings</span></label
+                >
+                <div
+                  id="tab-content1"
+                  class="tab-content"
+                  role="tabpanel"
+                  aria-labelledby="description"
+                  aria-hidden="false"
+                >
+                  <div style="width: 85%; display: table">
+                    <div style="display: table-cell; padding-right: 5%">
+                      <span class="dbminputlabel" id="botownderid"
+                        >Bot Owner ID</span
+                      ><br />
+                      <input
+                        class="settings dbm_monospace"
+                        type="text"
+                        id="settings-ownerId"
+                        onchange="DBM.onSettingsChange('ownerId')"
+                        onkeyup="DBM.onSettingsChange('ownerId')"
+                      />
+                    </div>
+                    <div style="display: table-cell">
+                      <span class="dbminputlabel" id="encryptionpass"
+                        >Encryption Password</span
+                      ><br />
+                      <input
+                        class="settings dbm_monospace"
+                        type="text"
+                        id="settings-encrypt"
+                        onchange="DBM.onEncryptChange(this)"
+                        onkeyup="DBM.onEncryptChange(this)"
+                        placeholder="Leave blank to disallow..."
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <span class="dbminputlabel" id="bottoken">Bot Token</span
+                  ><br />
+                  <div style="float: left; width: 85%">
+                    <input
+                      class="settings dbm_monospace"
+                      type="password"
+                      autocomplete="new-password"
+                      id="settings-token"
+                      onchange="DBM.onSettingsChange('token')"
+                      onkeyup="DBM.onSettingsChange('token')"
+                    />
+                  </div>
+                  <div style="float: left">
+                    <button
+                      style="
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                        padding-bottom: 8px;
+                      "
+                      class="tiny compact ui icon button"
+                      onclick="DBM.toggleHidden(this, 'settings-token')"
+                      id="showbutton"
+                    >
+                      Show
+                    </button>
+                  </div>
+                  <br /><br />
+                  <div style="width: 85%; display: table">
+                    <div style="display: table-cell; padding-right: 5%">
+                      <div style="padding-top: 6px">
+                        <span class="dbminputlabel" id="clientid"
+                          >Client ID</span
+                        >
+                      </div>
+                      <input
+                        class="settings dbm_monospace"
+                        type="text"
+                        id="settings-client"
+                        onchange="DBM.onSettingsChange('client')"
+                        onkeyup="DBM.onSettingsChange('client')"
+                        maxlength="21"
+                      />
+                    </div>
+                    <div style="display: table-cell">
+                      <span class="dbminputlabel" id="permissionsintlabel"
+                        >Permissions Integer</span
+                      ><br />
+                      <input
+                        class="settings dbm_monospace"
+                        type="text"
+                        id="settings-permissionsint"
+                        onchange="DBM.onSettingsChange('permissionsint')"
+                        onkeyup="DBM.onSettingsChange('permissionsint')"
+                        placeholder="Leave blank for all permissions..."
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <p id="bot-links"></p>
+                </div>
+              </li>
+              <li>
+                <input type="radio" name="tabs" id="tab2" />
+                <label
+                  class="tablabel"
+                  for="tab2"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel2"
+                  tabindex="1"
+                  ><i class="bug icon"></i
+                  ><span id="settingstablabel2">Bot Settings 2</span></label
+                >
+                <div
+                  id="tab-content2"
+                  class="tab-content"
+                  role="tabpanel"
+                  aria-labelledby="specification"
+                  aria-hidden="true"
+                >
+                  <div style="float: left; width: calc(50% - 12px)">
+                    <span class="dbminputlabel" id="invalidButtonTextLabel"
+                      >Invalid Button Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to disable response..."
+                      id="settings-invalidButtonText"
+                      onchange="DBM.onSettingsChange('invalidButtonText')"
+                      onkeyup="DBM.onSettingsChange('invalidButtonText')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="invalidSelectTextLabel"
+                      >Invalid Select Menu Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to disable response..."
+                      id="settings-invalidSelectText"
+                      onchange="DBM.onSettingsChange('invalidSelectText')"
+                      onkeyup="DBM.onSettingsChange('invalidSelectText')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="invalidUserInteractionLabel"
+                      >Invalid User Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to disable response..."
+                      id="settings-invalidUserText"
+                      onchange="DBM.onSettingsChange('invalidUserText')"
+                      onkeyup="DBM.onSettingsChange('invalidUserText')"
+                    />
+                  </div>
+                  <div style="float: right; width: calc(50% - 12px)">
+                    <span class="dbminputlabel" id="leaveVoiceTimeoutLabel"
+                      >Auto-Leave Voice Channel Delay (Seconds)</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to prevent auto-leave..."
+                      id="settings-leaveVoiceTimeout"
+                      onchange="DBM.onSettingsChange('leaveVoiceTimeout')"
+                      onkeyup="DBM.onSettingsChange('leaveVoiceTimeout')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="autoDeafenLabel"
+                      >Auto-Deafen on Voice Channel Join</span
+                    ><br />
+                    <select
+                      class="settings round"
+                      class="settings"
+                      id="settings-autoDeafen"
+                      onchange="DBM.onSettingsChange('autoDeafen')"
+                    >
+                      <option value="true" id="autoDeafenYes">Yes</option>
+                      <option value="false" id="autoDeafenNo">No</option>
+                    </select>
+                    <br />
+                    <span class="dbminputlabel" id="mutableVolumeLabel"
+                      >Allow Bot Volume Changing in Actions</span
+                    ><br />
+                    <select
+                      class="settings round"
+                      class="settings"
+                      id="settings-mutableVolume"
+                      onchange="DBM.onSettingsChange('mutableVolume')"
+                    >
+                      <option value="true" id="mutableVolumeYes">Yes</option>
+                      <option value="false" id="mutableVolumeNo">No</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <input type="radio" name="tabs" id="tab3" />
+                <label
+                  class="tablabel"
+                  for="tab3"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel3"
+                  tabindex="2"
+                  ><i class="edit icon"></i
+                  ><span id="settingstablabel3">Editor Settings</span></label
+                >
+                <div
+                  id="tab-content3"
+                  class="tab-content"
+                  role="tabpanel"
+                  aria-labelledby="specification"
+                  aria-hidden="true"
+                >
+                  <div style="float: left; width: 33%">
+                    <div style="width: calc(100% - 120px); float: left">
+                      <div>
+                        <span class="dbminputlabel" id="editorcontentsizelabel"
+                          >Editor Content Fill</span
+                        ><br />
+                        <input
+                          class="settings"
+                          id="editorcontentsize"
+                          placeholder="Leave blank to fill..."
+                          onchange="DBM.onEditorOptionChanged(event.srcElement); DBM.toggleEditorRefreshSize(2);"
+                        />
+                      </div>
+                    </div>
+
+                    <div style="margin-top: 19px; float: left">
+                      <div class="tiny compact ui buttons">
+                        <div class="tinyverticalline"></div>
+                        <button
+                          style="border-radius: 0; padding-bottom: 8px"
+                          class="ui icon button"
+                          onclick="DBM.toggleEditorRefreshSize(0);"
+                          id="editorcontentsizereset"
+                        >
+                          Reset
+                        </button>
+                        <div class="tinyverticalline"></div>
+                        <button
+                          class="ui icon button"
+                          onclick="DBM.toggleEditorRefreshSize(1);"
+                          id="editorcontentsizefill"
+                        >
+                          Fill
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="float: left; width: 33%">
+                    <div style="margin-top: 19px; float: right">
+                      <div class="tiny compact ui buttons">
+                        <div class="tinyverticalline"></div>
+                        <button
+                          style="
+                            border-top-left-radius: 0;
+                            border-bottom-left-radius: 0;
+                            padding-bottom: 8px;
+                          "
+                          class="ui icon button"
+                          onclick="DBM.setZoom(0);"
+                          id="editorzoomreset"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style="width: calc(100% - 75px); float: right">
+                      <span class="dbminputlabel" id="editorzoomlabel"
+                        >Editor Zoom</span
+                      ><br />
+                      <div>
+                        <input
+                          class="settings"
+                          id="editorzoom"
+                          onchange="DBM.onEditorZoomChange(event.srcElement)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="float: left; width: 33%">
+                    <div style="width: calc(100% - 30px); float: right">
+                      <span class="dbminputlabel" id="editordeletepolicylabel"
+                        >Delete Policy</span
+                      ><br />
+                      <div>
+                        <select
+                          class="settings round"
+                          class="settings"
+                          id="editordeletepolicy"
+                          onchange="DBM.onEditorDeletePolicyChange(event.srcElement)"
+                        >
+                          <option value="0" id="">Ask Always to Delete</option>
+                          <option value="1" id="">
+                            Delete Actions without Asking
+                          </option>
+                          <option value="2" id="">
+                            Never Ask, Delete Immediately
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <br /><br /><br />
+                  <hr class="mainbar" />
+                  <br />
+                  <div
+                    style="float: left; border: 0; width: 100%; display: table"
+                  >
+                    <dbm-checkbox
+                      style="float: left; width: 30%"
+                      inputId="autorestart"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="autorestartlabel"
+                      label="Auto Restart Bot on Save"
+                    ></dbm-checkbox>
+
+                    <dbm-checkbox
+                      style="float: left; width: 30%; margin-left: 5%"
+                      inputId="updatebotjs"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="updatebotjslabel"
+                      label="Automatically Update Bot.js"
+                    ></dbm-checkbox>
+
+                    <dbm-checkbox
+                      style="float: left; width: 30%; margin-left: 5%"
+                      inputId="actionresizing"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="actionresizinglabel"
+                      label="Allow Action Dialog Resizing"
+                    ></dbm-checkbox>
+                  </div>
+                  <div
+                    style="
+                      float: left;
+                      border: 0;
+                      width: 100%;
+                      display: table;
+                      margin-top: 9px;
+                    "
+                  >
+                    <dbm-checkbox
+                      style="float: left; width: 30%"
+                      inputId="showids"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="showidslabel"
+                      label="Show Command/Event IDs"
+                    ></dbm-checkbox>
+
+                    <dbm-checkbox
+                      style="float: left; width: 30%; margin-left: 5%"
+                      inputId="updatemodules"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="updatemoduleslabel"
+                      label="Automatically Update Modules"
+                    ></dbm-checkbox>
+
+                    <dbm-checkbox
+                      style="float: left; width: 30%; margin-left: 5%"
+                      inputId="extensionresizing"
+                      onchange="DBM.onOptionsCheckboxChanged(event)"
+                      labelId="extensionresizinglabel"
+                      label="Allow Extension Dialog Resizing"
+                    ></dbm-checkbox>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <input type="radio" name="tabs" id="tab4" />
+                <label
+                  class="tablabel"
+                  for="tab4"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel4"
+                  tabindex="3"
+                  ><i class="percent icon"></i
+                  ><span id="settingstablabel4"
+                    >Slash Command Options</span
+                  ></label
+                >
+                <div
+                  id="tab-content4"
+                  class="tab-content"
+                  role="tabpanel"
+                  aria-labelledby="specification"
+                  aria-hidden="true"
+                >
+                  <div style="float: left; width: calc(50% - 12px)">
+                    <span class="dbminputlabel">
+                      <span id="slashsystemlabel"
+                        >Slash Command Creation Preference</span
+                      >
+                      <help-icon type="SLASH_CREATION_PREFERENCE"></help-icon>
+                    </span>
+                    <br />
+                    <select
+                      class="settings round"
+                      id="settings-slashtype"
+                      onchange="DBM.onSlashTypeChanged(event.srcElement);"
+                    >
+                      <option value="auto" id="slashcommandsystem_auto">
+                        Automatically Decide Based on Server Count
+                      </option>
+                      <option value="global" id="slashcommandsystem_global">
+                        Make all Slash Commands Global (Slow to Refresh)
+                      </option>
+                      <option value="all" id="slashcommandsystem_all">
+                        Create all Slash Commands for every Server
+                      </option>
+                      <option value="manual" id="slashcommandsystem_server">
+                        Create Slash Commands in Selected Servers Only, No
+                        Global
+                      </option>
+                      <option
+                        value="manualglobal"
+                        id="slashcommandsystem_hybrid"
+                      >
+                        Create Slash Commands in Selected Servers, and Use
+                        Global Everywhere Else
+                      </option>
+                    </select>
+
+                    <br />
+
+                    <div style="display: flex; justify-content: space-between">
+                      <dbm-checkbox
+                        multiline
+                        style="float: left"
+                        id="settings-clearUnlistedServers"
+                        inputId="clearUnlistedServers"
+                        onchange="DBM.onSettingsChange('clearUnlistedServers')"
+                        labelId="clearUnlistedServersLabel"
+                        label="Clear Server Commands for Unlisted Servers"
+                      ></dbm-checkbox>
+
+                      <div style="padding: 10px"></div>
+
+                      <dbm-checkbox
+                        multiline
+                        style="float: right"
+                        id="settings-ignoreCommandScopeErrors"
+                        inputId="ignoreCommandScopeErrors"
+                        onchange="DBM.onSettingsChange('ignoreCommandScopeErrors')"
+                        labelId="ignoreCommandScopeErrorsLabel"
+                        label='Ignore "Missing Access" Errors for Servers Without Command Scope'
+                      ></dbm-checkbox>
+                    </div>
+
+                    <br />
+
+                    <span class="dbminputlabel" id="slashcommandserverlistlabel"
+                      >Server IDs for Slash Commands (Place each on New
+                      Line)</span
+                    >
+                    <br />
+                    <textarea
+                      style="resize: none; width: 100%; height: 100%"
+                      rows="6"
+                      id="slashcommandserverlist"
+                      onkeyup="DBM.onSlashTypeServerListChanged(event.srcElement)"
+                      onchange="DBM.onSlashTypeServerListChanged(event.srcElement)"
+                    ></textarea>
+                  </div>
+                  <div style="float: right; width: calc(50% - 12px)">
+                    <span class="dbminputlabel" id="autoResponseTextLabel"
+                      >Default Slash Command Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      id="settings-autoResponseText"
+                      onchange="DBM.onSettingsChange('autoResponseText')"
+                      onkeyup="DBM.onSettingsChange('autoResponseText')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="noDescriptionTextLabel"
+                      >No Description Text</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      id="settings-noDescriptionText"
+                      onchange="DBM.onSettingsChange('noDescriptionText')"
+                      onkeyup="DBM.onSettingsChange('noDescriptionText')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="invalidPermissionsTextLabel"
+                      >Invalid Permissions Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to disable response..."
+                      id="settings-invalidPermissionsText"
+                      onchange="DBM.onSettingsChange('invalidPermissionsText')"
+                      onkeyup="DBM.onSettingsChange('invalidPermissionsText')"
+                    />
+                    <br />
+                    <span class="dbminputlabel" id="invalidCooldownTextLabel"
+                      >Time Restriction Enforced Response</span
+                    ><br />
+                    <input
+                      class="settings"
+                      type="text"
+                      placeholder="Leave blank to disable response..."
+                      id="settings-invalidCooldownText"
+                      onchange="DBM.onSettingsChange('invalidCooldownText')"
+                      onkeyup="DBM.onSettingsChange('invalidCooldownText')"
+                    />
+                  </div>
+                </div>
+              </li>
+              <li>
+                <input type="radio" name="tabs" id="tab5" />
+                <label
+                  class="tablabel"
+                  for="tab5"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel5"
+                  tabindex="4"
+                  ><i class="code icon"></i
+                  ><span id="settingstablabel5"
+                    >Text Command Options</span
+                  ></label
+                >
+                <div
+                  id="tab-content5"
+                  class="tab-content"
+                  role="tabpanel"
+                  aria-labelledby="specification"
+                  aria-hidden="true"
+                >
+                  <div style="width: 100%; display: table">
+                    <div
+                      style="
+                        display: table-cell;
+                        width: calc(25% - 18px);
+                        padding-right: 18px;
+                      "
+                    >
+                      <span class="dbminputlabel" id="commandtag"
+                        >Command Tag:</span
+                      ><br />
+                      <input
+                        class="settings"
+                        type="text"
+                        id="settings-tag"
+                        onchange="DBM.onSettingsChange('tag')"
+                        onkeyup="DBM.onSettingsChange('tag')"
+                      />
+                    </div>
+                    <div
+                      style="
+                        display: table-cell;
+                        width: calc(25% - 18px);
+                        padding-right: 18px;
+                      "
+                    >
+                      <span class="dbminputlabel" id="parameterseparator"
+                        >Parameter Separator</span
+                      ><br />
+                      <input
+                        class="settings"
+                        type="text"
+                        id="settings-separator"
+                        onchange="DBM.onSettingsChange('separator')"
+                        onkeyup="DBM.onSettingsChange('separator')"
+                      />
+                    </div>
+                    <div
+                      style="
+                        display: table-cell;
+                        width: calc(25% - 18px);
+                        padding-right: 18px;
+                      "
+                    >
+                      <span class="dbminputlabel" id="commandcasesensitive"
+                        >Command Case Sensitive</span
+                      ><br />
+                      <select
+                        class="settings round"
+                        id="settings-case"
+                        onchange="DBM.onSettingsChange('case')"
+                      >
+                        <option value="true" id="commandcasesentitiveyes">
+                          Yes
+                        </option>
+                        <option value="false" id="commandcasesentitiveno">
+                          No
+                        </option>
+                      </select>
+                    </div>
+                    <div style="display: table-cell; width: calc(25% - 18px)">
+                      <span class="dbminputlabel" id="allowprefixspacelabel"
+                        >Allow Prefix Spaces</span
+                      ><br />
+                      <select
+                        class="settings round"
+                        id="settings-allowPrefixSpace"
+                        onchange="DBM.onSettingsChange('allowPrefixSpace')"
+                      >
+                        <option value="true" id="allowprefixspaceyes">
+                          Yes
+                        </option>
+                        <option value="false" id="allowprefixspaceno">
+                          No
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div id="Tools" class="page" style="padding-top: 20px">
+            <dbm-container>
+              <div>
+                <br />
+                <div
+                  id="updateComponentsWrapper"
+                  style="width: 30%; float: left"
+                >
+                  <span class="dbminputlabel dbmdropdownlabel"
+                    >Type of Update to Download</span
+                  >
+                  <div class="ui action input" style="width: 100%">
+                    <select
+                      class="settings round"
+                      style="height: 40px"
+                      id="updateTypeToDownload"
+                    >
+                      <optgroup label="BOT">
+                        <option value="0">Full Update</option>
+                        <option value="1">Actions</option>
+                        <option value="2">Events</option>
+                        <option value="3">Extensions</option>
+                        <option value="4">File (bot.js)</option>
+                        <option value="5">File (shard.js)</option>
+                      </optgroup>
+                      <optgroup label="DBM">
+                        <option value="6">Full Update</option>
+                        <option value="7">Html</option>
+                        <option value="8">Permissions</option>
+                        <option value="9">Themes</option>
+                        <option value="10">Translations</option>
+                        <option value="11">NodeJS</option>
+                      </optgroup>
+                    </select>
+                    <button class="ui button" id="downloadUpdate">
+                      <i class="download icon"></i>Download
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div id="backupWrapper" style="width: 15%; float: right">
+                  <button
+                    class="ui button"
+                    id="createBackup"
+                    style="height: 40px"
+                  >
+                    <i class="save icon"></i>Create Backup
+                  </button>
+                  <br /><br />
+                  <button
+                    class="ui button"
+                    id="restoreBackup"
+                    style="height: 40px"
+                  >
+                    <i class="upload icon"></i>Restore Backup
+                  </button>
+                  <br /><br />
+                  <button
+                    class="ui button"
+                    id="deleteBackup"
+                    style="height: 40px"
+                  >
+                    <i class="upload icon"></i>Delete Backup
+                  </button>
+                </div>
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div
+                  id="footerComponentsWrapper"
+                  style="
+                    position: fixed;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 1000;
+                  "
+                >
+                  <div class="ui icon buttons">
+                    <button class="ui button" id="githubButton">
+                      <i class="github icon"></i>GitHub
+                    </button>
+                    <button class="ui button" id="discordButton">
+                      <i class="discord icon"></i>Discord
+                    </button>
+                    <button class="ui button" id="youtubeButton">
+                      <i class="youtube icon"></i>YouTube
+                    </button>
+                  </div>
+                </div>
+                <br /><br />
+              </div>
+            </dbm-container>
+
+            <div
+              class="ui small modal custom-backup-modal"
+              id="restoreBackupModal"
+            >
+              <div class="header">
+                <i class="history icon"></i>
+                Restore Backup
+              </div>
+              <div class="content">
+                <div class="ui form">
+                  <div class="field">
+                    <span class="dbminputlabel dbmdropdownlabel"
+                      >Select Backup to Restore</span
+                    >
+                    <select class="ui dropdown" id="backupSelect"></select>
+                  </div>
+                  <div class="ui warning message">
+                    This will overwrite current <b>data</b> folder.
+                  </div>
+                </div>
+              </div>
+              <div class="actions">
+                <div class="ui cancel button">Cancel</div>
+                <div class="ui red approve button">
+                  <i class="history icon"></i>Restore
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ui small modal custom-backup-modal"
+              id="deleteBackupModal"
+            >
+              <div class="header">
+                <i class="trash icon"></i>
+                Delete Backup
+              </div>
+              <div class="content">
+                <div class="ui form">
+                  <div class="field">
+                    <span class="dbminputlabel dbmdropdownlabel"
+                      >Select Backup to Delete</span
+                    >
+                    <select
+                      class="ui dropdown"
+                      id="deleteBackupSelect"
+                    ></select>
+                  </div>
+                  <div class="ui warning message">
+                    This will <b>permanently delete</b> the selected backup.
+                  </div>
+                </div>
+              </div>
+              <div class="actions">
+                <div class="ui cancel button">Cancel</div>
+                <div class="ui red approve button">
+                  <i class="trash icon"></i>Delete
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="No_Project" style="display: none">
+          <div style="text-align: center; padding-top: 5%">
+            <font size="4">
+              <div id="steamName">
+                <span id="hellosteam">Hello!</span><br />
+                <span id="welcomesteam">Welcome to Discord Bot Maker!</span>
+              </div>
+            </font>
+            <br /><br /><br /><br /><br /><br /><br />
+            <font size="7"><span id="noprojectopen">No Project Open</span></font
+            ><br />
+            <br /><br />
+            <button
+              class="ui labeled icon button"
+              onclick="DBM.createNewProject()"
+            >
+              <i class="left file icon"></i>
+              <span id="createnewbotproject">Create New Bot Project</span>
+            </button>
+            <button
+              class="ui right labeled icon button"
+              onclick="DBM.openProject()"
+            >
+              <span id="openexistingbotproject">Open Existing Bot Project</span>
+              <i class="right folder open icon"></i>
+            </button>
+          </div>
+        </div>
+        <div id="Compiling_Actions" style="display: none">
+          <div style="text-align: center; padding-top: 30%">
+            <font size="4">
+              <div>
+                <span id="compilingactionstext">Welcome!</span>
+                <br /><br />
+                <div
+                  class="ui indicating progress"
+                  id="actioncompilebar"
+                  style="display: none; margin-top: 24px"
+                >
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </font>
+          </div>
+        </div>
+        <div
+          id="saveAndQuit"
+          class="ui basic modal"
+          style="background-color: #36393e; border: 2px solid black"
+        >
+          <div class="ui icon header" style="border: none">
+            <i class="save icon"></i>
+            <span id="savebeforeclosing"
+              >Would you like to save before closing?</span
+            >
+          </div>
+          <div style="text-align: center; padding-bottom: 5%">
+            <button
+              class="tiny compact ui labeled icon button"
+              onclick="DBM.saveAndClose()"
+            >
+              <i class="checkmark icon"></i>
+              <span id="savebutton">Save</span>
+            </button>
+            <button
+              class="tiny compact ui labeled icon button"
+              style="margin-left: 20px"
+              onclick="DBM.noSaveAndClose()"
+            >
+              <i class="remove icon"></i>
+              <span id="dontsavebutton">Don't Save</span>
+            </button>
+            <button
+              class="tiny compact ui labeled icon button"
+              style="margin-left: 20px"
+              onclick="DBM.cancelModal()"
+            >
+              <i class="minus icon"></i>
+              <span id="cancelbutton">Cancel</span>
+            </button>
+          </div>
+        </div>
+        <div
+          id="cooldown"
+          class="ui small modal"
+          style="
+            height: 180px;
+            border-radius: 10px;
+            background-color: #36393e;
+            border: 2px solid black;
+          "
+        >
+          <h5 style="text-align: center" class="ui header">
+            <span id="text-cooldown">Command Aliases</span>
+          </h5>
+          <div style="margin: 20px 20px 20px 20px">
+            <div style="float: left; width: 45%">
+              <span id="amountoftime">Amount of Time:</span><br />
+              <input
+                class="round"
+                style="height: 38px; margin-top: 5px"
+                id="cooldown-input"
+                onkeyup="DBM.cooldownTypeUpdate()"
+                type="text"
+              />
+            </div>
+            <div style="float: right; width: 45%">
+              <span id="timemeasurement">Time Measurement:</span><br />
+              <div style="margin-top: 5px">
+                <select
+                  class="ui fluid dropdown"
+                  id="select-cooldown"
+                  style="width: 100%"
+                  onchange="DBM.cooldownTypeUpdate()"
+                >
+                  <option value="0" id="norestriction">No Restriction</option>
+                  <option value="1" id="seconds">Seconds</option>
+                  <option value="2" id="minutes">Minutes</option>
+                  <option value="3" id="hours">Hours</option>
+                  <option value="4" id="days">Days</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="moduleManager" class="ui modal">
+          <h5 style="text-align: center" class="ui header">
+            <span id="nodejsmodules">NodeJS Modules</span>
+          </h5>
+          <div style="width: 700px">
+            <table
+              id="mm-table2"
+              class="ui inverted fixed single line celled table"
+            >
+              <thead>
+                <tr>
+                  <th>Node Module</th>
+                  <th style="width: 35%">Version</th>
+                  <th style="width: 12%">Installed</th>
+                  <th style="width: 12%">Delete</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="modalChild" style="width: 700px">
+            <table
+              id="mm-table"
+              class="ui inverted fixed single line celled table"
+            >
+              <tbody id="mm-tbody"></tbody>
+            </table>
+          </div>
+          <div>
+            <div
+              style="width: 85%; margin-left: 45px; margin-top: 15px"
+              class="ui icon input"
+            >
+              <input
+                style="height: 38px"
+                id="mm-input"
+                type="text"
+                placeholder="Add module..."
+                onkeydown="DBM.preventSpace(event)"
+              />
+              <i
+                class="inverted circular plus link icon"
+                onclick="DBM.addModule()"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      id="maintheme"
+      href="../../../themes/Default/main.css"
+    />
+    <script>
+      if (typeof module === "object") {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+    <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../lib/jquery/jquery.blockUI.js"
+    ></script>
+    <script type="text/javascript" src="../lib/dbm/Application.js"></script>
+    <script
+      type="text/javascript"
+      src="../style/semantic/dist/semantic.min.js"
+    ></script>
+    <script type="text/javascript" src="tools/index.js"></script>
+    <script>
+      if (window.module) module = window.module;
+      jQuery(document).ready(function () {
+        jQuery("#comType").dropdown();
+        jQuery("#permissions").dropdown();
+        jQuery("#permissions2").dropdown();
+        jQuery("#restriction").dropdown();
+        jQuery("#event-type").dropdown();
+        jQuery("#select-cooldown").dropdown();
+        jQuery(".checkbox").checkbox();
+      });
+    </script>
+  </body>
+</html>

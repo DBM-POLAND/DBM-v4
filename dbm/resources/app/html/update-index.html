@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../style/semantic/dist/semantic.css"
+  />
+  <head>
+    <meta charset="UTF-8" />
+    <title>4.0.0 Update Welcome</title>
+  </head>
+  <body style="overflow: scroll">
+    <div id="contents" style="padding: 16px">
+      <img
+        src="../style/img/Splash.png"
+        style="top: 0px; left: 120px; position: absolute"
+        width="300"
+        height="300"
+      />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="left: -45px; position: absolute">
+        <div class="help_mainHeader">Welcome to Discord Bot Maker v4.0!</div>
+      </div>
+      <br /><br /><br /><br /><br />
+      <div class="help_textContainer">
+        <span class="help_textContainerHeader">New Features</span>
+        <p class="help_text">
+          This update aims to provide all the new features for Discord bots!
+          This includes slash commands, context menu commands, buttons, all
+          types of selection menus, components in modals, components v2, polls
+          in messages, and much more!<br /><br />
+
+          However, since this update is so big and so many things were changed,
+          there may be a couple problems when trying to begin. Please read
+          through this information before proceeding!
+        </p>
+      </div>
+      <br />
+      <div class="help_textContainer">
+        <span class="help_textContainerHeader">Final Info</span>
+        <p class="help_text">
+          Thank you for reading! This page will only appear once. Next time you
+          open Discord Bot Maker, you will be sent to your most recent
+          project.<br /><br />
+
+          If you would like to view this page again, please go to:
+          <span class="help_highlightText">About > Update Information</span>.
+        </p>
+      </div>
+    </div>
+  </body>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    id="maintheme"
+    href="../../../themes/Default/main.css"
+  />
+  <script>
+    if (typeof module === "object") {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
+  <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+  <script
+    type="text/javascript"
+    src="../style/semantic/dist/semantic.min.js"
+  ></script>
+  <script type="text/javascript">
+    require("electron").ipcRenderer.on(
+      "modifyBodyHtml",
+      (event, html) => (document.getElementById("contents").innerHTML = html)
+    );
+  </script>
+  <script>
+    if (window.module) module = window.module;
+  </script>
+</html>
