@@ -18,7 +18,7 @@ jobs:
           embed-url: "${{ github.event.head_commit.url }}"
           embed-color: 65297
           embed-timestamp: "${{ github.event.head_commit.timestamp }}"
-          embed-thumbnail-url: "https://github.com/shadoow051/DBM-v14/raw/main/docs/img/dbm-poland.png"
+          embed-thumbnail-url: "https://github.com/DBM-POLAND/DBM-v4/raw/main/docs/img/dbm-poland.png"
           embed-author-name: "${{ github.actor }}"
           embed-author-url: "https://github.com/${{ github.actor }}"
           embed-author-icon-url: "https://avatars.githubusercontent.com/${{ github.actor }}"
